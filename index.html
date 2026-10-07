@@ -508,6 +508,95 @@ p.ss{font-size:.95rem;line-height:1.7;max-width:640px;margin-top:12px;}
 @keyframes dashFlow{to{stroke-dashoffset:-40;}}
 @keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
 
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATION SYSTEM — scroll-triggered + interaction-triggered
+═══════════════════════════════════════════════════════════════ */
+
+/* --- Scroll-triggered base --- */
+.a-up{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1);}
+.a-up.a-in{opacity:1;transform:none;}
+.a-left{opacity:0;transform:translateX(-20px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+.a-left.a-in{opacity:1;transform:none;}
+.a-scale{opacity:0;transform:scale(.94);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.34,1.36,.64,1);}
+.a-scale.a-in{opacity:1;transform:none;}
+
+/* --- Flip cards entrance --- */
+.flip.a-up{transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1),perspective 0s;}
+
+/* --- Flow cards in s3 --- */
+.flow-card{transition:opacity .52s cubic-bezier(.4,0,.2,1),transform .52s cubic-bezier(.4,0,.2,1),box-shadow .25s;}
+.flow-card.fc-hidden{opacity:0;transform:translateX(22px);}
+
+/* Flow arrows scale in */
+.flow-arr{display:block;transition:opacity .38s cubic-bezier(.4,0,.2,1),transform .38s cubic-bezier(.4,0,.2,1);transform-origin:top center;}
+.flow-arr.fa-hidden{opacity:0;transform:scaleY(0);}
+
+/* --- Before / After enhanced --- */
+/* Conflict badges */
+@keyframes confShake{0%,100%{transform:none}20%{transform:translateX(-6px) rotate(-1deg)}45%{transform:translateX(6px) rotate(1deg)}70%{transform:translateX(-3px)}85%{transform:translateX(3px)}}
+@keyframes confFade{to{opacity:.3;transform:scale(.95)}}
+.ba-conflict{transition:opacity .3s,transform .3s;}
+.conf-shake{animation:confShake .5s ease;}
+.conf-dim{animation:confFade .4s ease forwards;}
+
+/* After column items reveal */
+.ba-after-item{opacity:0;transform:translateY(16px);transition:opacity .42s cubic-bezier(.4,0,.2,1),transform .42s cubic-bezier(.4,0,.2,1);}
+.ba-after-item.bai-in{opacity:1;transform:none;}
+
+/* Golden record glow on reveal */
+@keyframes goldGlow{
+  0%{transform:scale(.96);box-shadow:0 0 0 0 rgba(22,163,74,.6);}
+  55%{box-shadow:0 0 0 18px rgba(22,163,74,0),0 12px 32px rgba(22,163,74,.22);}
+  100%{transform:scale(1);box-shadow:0 4px 18px rgba(22,163,74,.12);}
+}
+.gold-glow{animation:goldGlow .9s cubic-bezier(.34,1.36,.64,1) forwards;}
+
+/* --- Architecture layer stagger --- */
+.layer.a-up{opacity:0;transform:translateX(-18px) scale(.99);}
+
+/* --- Leader cards --- */
+.leader-card.a-up{transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1),box-shadow .26s;}
+
+/* --- Product cards slide in --- */
+.prod-card.a-left{transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1),background .26s,border-color .26s,box-shadow .26s;}
+
+/* --- BVC invest cells --- */
+.inv-cell.a-scale{transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.34,1.36,.64,1);}
+
+/* --- Number counter pulse --- */
+@keyframes numFlash{0%{opacity:.6}50%{opacity:1;color:var(--brand-accent)}100%{opacity:1}}
+.num-flash{animation:numFlash .5s ease;}
+
+/* --- WTT / Gantt stagger --- */
+.wtt.a-up{transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1),box-shadow .26s;}
+.grow.a-left{transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1),filter .26s;}
+
+/* --- CTA cards --- */
+.cta-card.a-up{transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);}
+
+/* --- Eyebrow + heading --- */
+.eyebrow.a-up,.sh.a-up,.ss.a-up{transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);}
+
+/* stat pills in hero */
+.stat-pill.a-up,.pain-pill.a-up{transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);}
+
+/* --- Own fact cards (s3) left column --- */
+.own-fact.a-up,.own-next.a-up{transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+
+/* --- Metric values count up --- */
+.own-metric div b{transition:color .4s;}
+
+/* Gantt bar entrance */
+.gbar{transform-origin:left center;transition:width .9s cubic-bezier(.4,0,.2,1) .2s !important;}
+.gbar.bar-pre{width:0 !important;}
+
+/* Arch note entrance */
+.arch-note.a-up{transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+
+/* Progress bar pulse on enter */
+@keyframes progressPulse{0%{box-shadow:0 0 0 0 rgba(12,166,233,.5)}70%{box-shadow:0 0 0 6px rgba(12,166,233,0)}100%{box-shadow:0 0 0 0 rgba(12,166,233,0)}}
+#progress.pulse{animation:progressPulse .6s ease;}
+
 @media(max-width:1080px){
   .slide-inner{padding:80px 30px 44px;}
   .hero-wrap{padding:92px 30px 40px;grid-template-columns:1fr;gap:34px;}
@@ -734,28 +823,28 @@ p.ss{font-size:.95rem;line-height:1.7;max-width:640px;margin-top:12px;}
         </div>
       </div>
 
-      <div class="own-visual">
-        <div class="flow-card">
+      <div class="own-visual" id="flow-stack">
+        <div class="flow-card fc-hidden">
           <div class="fc-label" style="color:var(--muted);">Source Systems (Inputs)</div>
           <div class="fc-name">Deltek + ATS + SharePoint + Other</div>
           <div class="fc-detail">Each has its own version of the same contracts, people, and programs</div>
         </div>
-        <div style="text-align:center;font-size:24px;color:var(--infa-orange);margin:6px 0;font-weight:900;">↓</div>
-        <div class="flow-card" style="border-left-color:var(--infa-orange);">
+        <div class="flow-arr fa-hidden" style="text-align:center;font-size:24px;color:var(--infa-orange);margin:6px 0;font-weight:900;">↓</div>
+        <div class="flow-card fc-hidden" style="border-left-color:var(--infa-orange);">
           <div class="fc-label" style="color:var(--infa-orange);">Informatica IDMC</div>
           <div class="fc-name">Data Integration — Already Running</div>
           <div class="fc-detail">The pipelines i3 built. Integrates source data and makes it available downstream.</div>
           <div class="fc-status live"><span style="width:6px;height:6px;border-radius:50%;background:#16A34A;display:inline-block;animation:pulseSlow 1.2s ease-in-out infinite;"></span> Live Today</div>
         </div>
-        <div style="text-align:center;font-size:24px;color:var(--brand-primary);margin:6px 0;font-weight:900;">↓</div>
-        <div class="flow-card" style="border-left-color:var(--brand-primary);">
+        <div class="flow-arr fa-hidden" style="text-align:center;font-size:24px;color:var(--brand-primary);margin:6px 0;font-weight:900;">↓</div>
+        <div class="flow-card fc-hidden" style="border-left-color:var(--brand-primary);">
           <div class="fc-label" style="color:var(--brand-primary);">MDM + Data Quality + Governance</div>
           <div class="fc-name">One Trusted Record — Proposed</div>
           <div class="fc-detail">Match, merge, validate, and govern: one master record per entity, with privacy controls applied.</div>
           <div class="fc-status proposed">⚡ Proposed — $200K</div>
         </div>
-        <div style="text-align:center;font-size:24px;color:var(--muted);margin:6px 0;font-weight:900;">↓</div>
-        <div class="flow-card" style="border-left-color:var(--muted);opacity:.7;">
+        <div class="flow-arr fa-hidden" style="text-align:center;font-size:24px;color:var(--muted);margin:6px 0;font-weight:900;">↓</div>
+        <div class="flow-card fc-hidden" style="border-left-color:var(--muted);opacity:.7;">
           <div class="fc-label" style="color:var(--muted);">Roadmap Activation Layer</div>
           <div class="fc-name">Tableau · Data Cloud · Agentforce</div>
           <div class="fc-detail">Dashboards, AI, and predictive intelligence — built on a foundation that's already trusted.</div>
@@ -1093,11 +1182,11 @@ p.ss{font-size:.95rem;line-height:1.7;max-width:640px;margin-top:12px;}
 
       <!-- After column -->
       <div class="ba-col" id="ba-after">
-        <div class="ba-col-header">
+        <div class="ba-col-header ba-after-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--dq-green)" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
           <span class="label after-label">After MDM + Governance</span>
         </div>
-        <div class="ba-arrow">↓</div>
+        <div class="ba-arrow ba-after-item">↓</div>
         <div class="ba-golden">
           <div class="g-label">One Golden Record — Employee Master</div>
           <div style="font-size:1rem;font-weight:900;color:var(--ink);margin-bottom:8px;">Sarah J. Chen, Ph.D. · DLT-4821</div>
@@ -1110,7 +1199,7 @@ p.ss{font-size:.95rem;line-height:1.7;max-width:640px;margin-top:12px;}
           <div><span class="ba-tag">🔒 TS/SCI — restricted</span><span class="ba-tag">✅ BD team visible</span><span class="ba-tag">✅ PM visible</span></div>
         </div>
 
-        <div style="margin-top:14px;background:#F0FDF4;border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:12px 14px;">
+        <div class="ba-after-item" style="margin-top:14px;background:#F0FDF4;border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:12px 14px;">
           <div style="font-size:10px;font-weight:800;color:var(--dq-green);margin-bottom:4px;">Result</div>
           <ul style="list-style:none;display:flex;flex-direction:column;gap:5px;">
             <li style="font-size:.82rem;color:#14532D;line-height:1.5;">• BD queries the golden record to build a bid team — no phone calls</li>
@@ -1933,12 +2022,55 @@ function resetDemo5() {
 demo5Show(0);
 
 /* ═══════════════════════════════════════════════════════════════
-   SLIDE 6 — BEFORE / AFTER
+   SLIDE 6 — BEFORE / AFTER  (enhanced with animations)
 ═══════════════════════════════════════════════════════════════ */
 function setBA(state) {
   document.querySelectorAll('.toggle-wrap button').forEach(b => b.classList.toggle('on', b.dataset.state === state));
-  document.getElementById('ba-before').classList.toggle('hidden', state === 'after');
-  document.getElementById('ba-after').classList.toggle('hidden', state !== 'after');
+
+  if (state === 'after') {
+    // 1. Shake every conflict badge
+    const conflicts = document.querySelectorAll('.ba-conflict');
+    conflicts.forEach((el, i) => {
+      el.classList.remove('conf-shake');
+      void el.offsetWidth; // force reflow
+      setTimeout(() => {
+        el.classList.add('conf-shake');
+        setTimeout(() => el.classList.add('conf-dim'), 380);
+      }, i * 80);
+    });
+    // 2. Fade out before column
+    setTimeout(() => {
+      document.getElementById('ba-before').classList.add('hidden');
+      // 3. Reveal after column
+      const after = document.getElementById('ba-after');
+      after.classList.remove('hidden');
+      // 4. Stagger reveal of after items
+      const items = after.querySelectorAll('.ba-after-item');
+      items.forEach((item, i) => {
+        item.classList.remove('bai-in');
+        setTimeout(() => item.classList.add('bai-in'), 60 + i * 130);
+      });
+      // 5. Golden record glow
+      const gold = after.querySelector('.ba-golden');
+      if (gold) {
+        gold.classList.remove('gold-glow');
+        void gold.offsetWidth;
+        setTimeout(() => gold.classList.add('gold-glow'), 60 + items.length * 130);
+      }
+    }, conflicts.length * 80 + 260);
+
+  } else {
+    // Reset dims and animations
+    document.querySelectorAll('.ba-conflict').forEach(el => {
+      el.classList.remove('conf-shake', 'conf-dim');
+    });
+    document.getElementById('ba-before').classList.remove('hidden');
+    document.getElementById('ba-after').classList.add('hidden');
+    // Reset after items so next toggle re-animates
+    document.querySelectorAll('#ba-after .ba-after-item').forEach(el => el.classList.remove('bai-in'));
+    const gold = document.querySelector('#ba-after .ba-golden');
+    if (gold) gold.classList.remove('gold-glow');
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2145,6 +2277,209 @@ Values are directional estimates for executive discussion, not a contractual com
 }
 
 calcBvc();
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATION ENGINE
+═══════════════════════════════════════════════════════════════ */
+
+/* --- Generic scroll-reveal IntersectionObserver --- */
+function makeRevealObserver(threshold = 0.14) {
+  return new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('a-in');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold });
+}
+const revealObs = makeRevealObserver();
+
+/* Utility: stagger-observe a NodeList with delay increments */
+function staggerReveal(els, baseDelay = 0, step = 120, cls = 'a-up') {
+  els.forEach((el, i) => {
+    el.classList.add(cls);
+    el.style.transitionDelay = (baseDelay + i * step) + 'ms';
+    revealObs.observe(el);
+  });
+}
+
+/* --- Hero: stat pills + pain pills stagger in on load --- */
+(function heroEntrance() {
+  const pills = document.querySelectorAll('.stat-pill');
+  pills.forEach((el, i) => {
+    el.classList.add('a-up');
+    el.style.transitionDelay = (300 + i * 100) + 'ms';
+    setTimeout(() => el.classList.add('a-in'), 320 + i * 100);
+  });
+  const ppills = document.querySelectorAll('.pain-pill');
+  ppills.forEach((el, i) => {
+    el.classList.add('a-up');
+    el.style.transitionDelay = '0ms';
+    setTimeout(() => el.classList.add('a-in'), 480 + i * 110);
+  });
+  const heroProd = document.querySelector('.hero-products');
+  if (heroProd) { heroProd.classList.add('a-up'); setTimeout(() => heroProd.classList.add('a-in'), 780); }
+})();
+
+/* --- Each slide: eyebrow + heading + subtitle fade-up --- */
+document.querySelectorAll('.slide').forEach(slide => {
+  const ew = slide.querySelector('.eyebrow');
+  const h2 = slide.querySelector('h2.sh');
+  const ss = slide.querySelector('p.ss');
+  const isHero = slide.id === 's1';
+  if (isHero) return; // hero handles its own entrance
+  if (ew) { ew.classList.add('a-up'); revealObs.observe(ew); }
+  if (h2) { h2.classList.add('a-up'); h2.style.transitionDelay = '80ms'; revealObs.observe(h2); }
+  if (ss) { ss.classList.add('a-up'); ss.style.transitionDelay = '150ms'; revealObs.observe(ss); }
+});
+
+/* --- Slide 2: flip cards stagger --- */
+staggerReveal(document.querySelectorAll('#s2 .flip'), 60, 130, 'a-up');
+
+/* --- Slide 3: left column + flow cards sequential --- */
+(function s3Anims() {
+  // Left column: own-fact, own-next, the context box
+  const leftEls = document.querySelectorAll('#s3 .own-fact, #s3 .own-next');
+  staggerReveal(leftEls, 80, 160, 'a-up');
+  const ctxBox = document.querySelector('#s3 .own-grid > div > div:last-child');
+  if (ctxBox) { ctxBox.classList.add('a-up'); ctxBox.style.transitionDelay = '380ms'; revealObs.observe(ctxBox); }
+
+  // Flow stack: reveal cards + arrows sequentially when s3 scrolls in
+  const flowItems = Array.from(document.querySelectorAll('#flow-stack .flow-card, #flow-stack .flow-arr'));
+  const s3 = document.getElementById('s3');
+  let flowTriggered = false;
+  const flowObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !flowTriggered) {
+        flowTriggered = true;
+        flowItems.forEach((el, i) => {
+          setTimeout(() => {
+            el.classList.remove('fc-hidden', 'fa-hidden');
+          }, 200 + i * 180);
+        });
+        flowObs.unobserve(s3);
+      }
+    });
+  }, { threshold: 0.25 });
+  flowObs.observe(s3);
+})();
+
+/* --- Slide 3: metric numbers count up --- */
+(function s3Counters() {
+  const metricBolds = document.querySelectorAll('#s3 .own-metric div b');
+  const targets = [66758, null, null]; // $66,758, "Self", "Jan 2026"
+  let counted = false;
+  const cObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !counted) {
+        counted = true;
+        const el = metricBolds[0];
+        if (!el) return;
+        const end = 66758;
+        const dur = 1400;
+        const start = performance.now();
+        function step(now) {
+          const p = Math.min(1, (now - start) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = '$' + Math.round(end * eased).toLocaleString('en-US');
+          if (p < 1) requestAnimationFrame(step);
+          else { el.classList.add('num-flash'); setTimeout(() => el.classList.remove('num-flash'), 600); }
+        }
+        requestAnimationFrame(step);
+        cObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  if (metricBolds[0]) cObs.observe(metricBolds[0]);
+})();
+
+/* --- Slide 4: prod-cards slide in from left --- */
+staggerReveal(document.querySelectorAll('#s4 .prod-card'), 60, 120, 'a-left');
+
+/* --- Slide 7: architecture layers stagger --- */
+(function s7Anims() {
+  const layers = document.querySelectorAll('.arch-stack .layer');
+  layers.forEach((el, i) => {
+    el.classList.add('a-up');
+    el.style.transitionDelay = (i * 110) + 'ms';
+    revealObs.observe(el);
+  });
+  const note = document.querySelector('.arch-note');
+  if (note) { note.classList.add('a-up'); note.style.transitionDelay = '480ms'; revealObs.observe(note); }
+})();
+
+/* --- Slide 8: leader cards stagger --- */
+staggerReveal(document.querySelectorAll('#s8 .leader-card'), 0, 130, 'a-up');
+
+/* --- Slide 9: investment cells scale in --- */
+staggerReveal(document.querySelectorAll('#s9 .inv-cell'), 60, 110, 'a-scale');
+
+/* --- Slide 9: BVC total count up when summary becomes visible --- */
+(function bvcCounter() {
+  const totalEl = document.getElementById('bvc-total');
+  if (!totalEl) return;
+  let lastVal = 0;
+  const origCalc = calcBvc;
+  // Wrap calcBvc to animate total changes
+  window.calcBvc = function() {
+    origCalc();
+    const raw = BVC_STATE.total;
+    if (raw !== lastVal && Math.abs(raw - lastVal) > 500) {
+      const from = lastVal;
+      lastVal = raw;
+      const dur = 700;
+      const start = performance.now();
+      function step(now) {
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const cur = from + (raw - from) * eased;
+        totalEl.textContent = '$' + Math.round(cur).toLocaleString('en-US');
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+  };
+})();
+
+/* --- Slide 10: wtt cards + gantt rows stagger --- */
+staggerReveal(document.querySelectorAll('#s10 .wtt'), 0, 110, 'a-up');
+(function ganttAnims() {
+  const rows = document.querySelectorAll('.grow');
+  const bars = document.querySelectorAll('.gbar');
+  // Pre-hide bar widths so they animate in
+  bars.forEach(b => b.classList.add('bar-pre'));
+  let ganttTriggered = false;
+  const ganttObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !ganttTriggered) {
+        ganttTriggered = true;
+        rows.forEach((row, i) => {
+          row.classList.add('a-left');
+          setTimeout(() => {
+            row.classList.add('a-in');
+            // Remove bar-pre to trigger width animation
+            const bar = row.querySelector('.gbar');
+            if (bar) { setTimeout(() => bar.classList.remove('bar-pre'), 80); }
+          }, i * 120);
+        });
+        ganttObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  const ganttEl = document.querySelector('.gantt');
+  if (ganttEl) ganttObs.observe(ganttEl);
+})();
+
+/* --- CTA cards stagger --- */
+staggerReveal(document.querySelectorAll('.cta-cards .cta-card'), 0, 120, 'a-up');
+
+/* --- Slide 6 initial state: after column items start hidden for first toggle --- */
+(function initBA() {
+  document.querySelectorAll('#ba-after .ba-after-item').forEach(el => {
+    el.classList.add('bai-in'); // show on load (before is active first)
+  });
+})();
 
 /* ═══════════════════════════════════════════════════════════════
    SLIDE 10 — GANTT DETAIL

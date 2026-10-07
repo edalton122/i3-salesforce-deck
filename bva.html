@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>i3 × Salesforce — Business Value Assessment</title>
+<link rel="icon" type="image/png" href="https://i3-corps.com/images/site/i3-square.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --brand-primary:#F6AE31;
+  --brand-secondary:#1D222A;
+  --brand-accent:#1E88C7;
+  --brand-light:#F7F5F2;
+  --infa-orange:#FF6B00;
+  --mdm-blue:#0E4FA3;
+  --dq-green:#16A34A;
+  --gov-purple:#7C3AED;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#F8FAFC;color:#0F172A;-webkit-font-smoothing:antialiased;}
+.page{max-width:1080px;margin:0 auto;padding:40px 32px 80px;}
+
+/* Nav */
+.back{display:inline-flex;align-items:center;gap:8px;color:#64748B;text-decoration:none;font-size:12px;font-weight:700;margin-bottom:30px;transition:color .2s;}
+.back:hover{color:#1E88C7;}
+
+/* Header */
+.header{background:var(--brand-secondary);border-radius:20px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+.header-left h1{font-size:2rem;font-weight:900;color:#fff;letter-spacing:-.03em;}
+.header-left p{font-size:.88rem;color:rgba(255,255,255,.55);margin-top:6px;}
+.header-right{text-align:right;}
+.header-right .logo-row{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin-bottom:6px;}
+.header-right .logo-row img{width:28px;height:28px;border-radius:6px;}
+.tag{display:inline-block;background:rgba(246,174,49,.15);border:1px solid rgba(246,174,49,.35);color:#F6AE31;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;border-radius:20px;padding:4px 10px;margin-top:4px;}
+.total-banner{background:white;border:2px solid var(--brand-primary);border-radius:16px;padding:22px 30px;display:flex;align-items:center;gap:32px;margin-bottom:28px;box-shadow:0 4px 20px rgba(0,0,0,.06);}
+.total-val{font-size:3rem;font-weight:900;color:#92600A;letter-spacing:-.04em;}
+.total-label{font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#94A3B8;margin-bottom:4px;}
+.total-note{font-size:.8rem;color:#64748B;line-height:1.6;}
+.payback-pill{margin-left:auto;background:var(--brand-secondary);color:#F6AE31;border-radius:12px;padding:12px 20px;text-align:center;}
+.payback-pill .pv{font-size:1.8rem;font-weight:900;letter-spacing:-.03em;}
+.payback-pill .pl{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,174,49,.6);margin-top:3px;}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;margin-bottom:18px;}
+.tab{border:none;background:white;border:1px solid #E2E8F0;border-radius:10px;padding:10px 18px;font-size:11px;font-weight:800;cursor:pointer;transition:all .2s;color:#64748B;}
+.tab.active{background:var(--brand-secondary);color:#fff;border-color:transparent;}
+.tab-panels{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px;}
+.panel{display:none;}
+.panel.active{display:contents;}
+
+/* Area card */
+.area-card{background:white;border-radius:16px;border:1px solid #E2E8F0;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.04);}
+.area-card .area-eyebrow{font-size:9px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;}
+.area-card h3{font-size:1.1rem;font-weight:900;color:#0F172A;letter-spacing:-.02em;margin-bottom:16px;}
+.slider-row{margin-bottom:14px;}
+.slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.slider-label span{font-size:11px;color:#475569;font-weight:600;}
+.slider-label .val{font-size:13px;font-weight:900;color:#0F172A;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:99px;background:#E2E8F0;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--brand-primary);cursor:pointer;border:2.5px solid white;box-shadow:0 2px 6px rgba(0,0,0,.2);}
+.bench-tag{display:inline-block;font-size:8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:#FEF3C7;color:#92600A;border-radius:5px;padding:2px 7px;margin-top:2px;}
+.area-result{background:#F8FAFC;border-radius:12px;border:1px solid #E2E8F0;padding:14px 16px;margin-top:14px;}
+.area-result .rv{font-size:1.8rem;font-weight:900;letter-spacing:-.03em;}
+.area-result .rl{font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#94A3B8;margin-top:3px;}
+
+/* Output card */
+.output-card{background:white;border-radius:16px;border:1px solid #E2E8F0;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.04);}
+.output-card h3{font-size:1rem;font-weight:900;color:#0F172A;letter-spacing:-.015em;margin-bottom:16px;}
+.out-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F1F5F9;}
+.out-row:last-child{border-bottom:none;}
+.out-row .n{font-size:12px;color:#475569;font-weight:600;}
+.out-row .v{font-size:15px;font-weight:900;color:#0F172A;}
+
+/* Investment / ROI */
+.roi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.roi-cell{background:white;border:1px solid #E2E8F0;border-radius:14px;padding:18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.roi-cell.hl{border-color:var(--brand-primary);background:#FFFBEB;}
+.roi-cell .rv{font-size:1.7rem;font-weight:900;letter-spacing:-.03em;color:#0F172A;}
+.roi-cell.hl .rv{color:#92600A;}
+.roi-cell .rl{font-size:8.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#94A3B8;margin-top:5px;line-height:1.45;}
+
+/* Chart */
+.chart-section{background:white;border:1px solid #E2E8F0;border-radius:16px;padding:24px;margin-bottom:28px;box-shadow:0 2px 10px rgba(0,0,0,.04);}
+.chart-section h3{font-size:1rem;font-weight:900;color:#0F172A;margin-bottom:18px;}
+.chart-wrap{height:220px;position:relative;}
+
+/* Assumptions */
+.assumptions{background:white;border:1px solid #E2E8F0;border-radius:14px;padding:22px 24px;margin-bottom:28px;}
+.assumptions h3{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#64748B;margin-bottom:14px;}
+.assume-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.assume-item{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:9px;padding:11px 14px;}
+.assume-item b{display:block;font-size:11.5px;font-weight:900;color:#0F172A;margin-bottom:3px;}
+.assume-item span{font-size:.78rem;color:#64748B;line-height:1.55;}
+
+/* CTA */
+.cta-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:var(--brand-secondary);border-radius:16px;padding:22px 28px;}
+.cta-bar p{font-size:.85rem;color:rgba(255,255,255,.7);max-width:440px;line-height:1.6;}
+.cta-links{display:flex;gap:10px;flex-wrap:wrap;}
+.cta-links a{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:11px 18px;font-size:11px;font-weight:800;text-decoration:none;transition:all .2s;}
+.cta-links a.primary{background:var(--brand-primary);color:var(--brand-secondary);}
+.cta-links a.ghost{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.2);}
+.cta-links a:hover{filter:brightness(1.1);}
+
+.foot{text-align:center;margin-top:28px;font-size:9.5px;color:#94A3B8;line-height:1.7;}
+
+@media(max-width:760px){
+  .tab-panels{grid-template-columns:1fr;}
+  .panel.active{display:block;}
+  .roi-grid{grid-template-columns:repeat(2,1fr);}
+  .assume-grid{grid-template-columns:1fr;}
+  .total-banner{flex-wrap:wrap;}
+  .header{flex-direction:column;gap:16px;}
+}
+@media print{
+  .back,.cta-bar,.tabs{display:none;}
+  .panel{display:block!important;}
+  .tab-panels{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <a href="index.html" class="back">← Back to microsite</a>
+
+  <div class="header">
+    <div class="header-left">
+      <h1>Business Value Assessment</h1>
+      <p>Integration Innovation, Inc. (i3) · Informatica MDM + Data Quality + Governance</p>
+    </div>
+    <div class="header-right">
+      <div class="logo-row">
+        <img src="https://i3-corps.com/images/site/i3-square.png" alt="i3"/>
+      </div>
+      <div class="tag">Industry Benchmark — Update with i3 actuals during design session</div>
+    </div>
+  </div>
+
+  <div class="total-banner">
+    <div>
+      <div class="total-label">Estimated Annual Value</div>
+      <div class="total-val" id="b-total">$2.1M</div>
+      <div class="total-note">Across Contract Growth, Workforce Readiness, Program Visibility, and Data Foundation.<br>Based on GovCon industry benchmarks for ~700-person defense contractors. Replace with i3 actuals at the design session.</div>
+    </div>
+    <div class="payback-pill">
+      <div class="pv" id="b-payback">&lt;12 mo</div>
+      <div class="pl">Payback period</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="bSwitch(0)">Contract Growth &amp; Capture</button>
+    <button class="tab" onclick="bSwitch(1)">Workforce Readiness</button>
+    <button class="tab" onclick="bSwitch(2)">Program Visibility</button>
+    <button class="tab" onclick="bSwitch(3)">Data Foundation</button>
+  </div>
+
+  <div id="bpanels" class="tab-panels">
+    <!-- Panel 0 — Contract Growth & Capture -->
+    <div class="panel active">
+      <div class="area-card">
+        <div class="area-eyebrow" style="color:#1E88C7;">01 · Contract Growth &amp; Capture</div>
+        <h3>Business Development &amp; Bid Efficiency</h3>
+
+        <div class="slider-row">
+          <div class="slider-label"><span>Annual bids prepared <span class="bench-tag">benchmark</span></span><span class="val" id="v00-val">45</span></div>
+          <input type="range" id="v00" min="10" max="120" value="45" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Hours saved per bid (data pull &amp; reconciliation) <span class="bench-tag">benchmark</span></span><span class="val" id="v01-val">14 hrs</span></div>
+          <input type="range" id="v01" min="4" max="40" value="14" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>BD analyst fully loaded hourly rate <span class="bench-tag">benchmark</span></span><span class="val" id="v02-val">$92</span></div>
+          <input type="range" id="v02" min="50" max="200" value="92" step="2" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Win rate lift from better intel (bps) <span class="bench-tag">benchmark</span></span><span class="val" id="v03-val">+2.5%</span></div>
+          <input type="range" id="v03" min="0" max="10" value="2.5" step=".5" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Avg annual contract value ($M) <span class="bench-tag">benchmark</span></span><span class="val" id="v04-val">$3.2M</span></div>
+          <input type="range" id="v04" min=".5" max="15" value="3.2" step=".1" oninput="syncBva()"/>
+        </div>
+
+        <div class="area-result">
+          <div class="rv" id="r0" style="color:#1E88C7;">$782K</div>
+          <div class="rl">Annual value — Contract Growth &amp; Capture</div>
+        </div>
+      </div>
+
+      <div class="output-card">
+        <h3>How We Calculate It</h3>
+        <div class="out-row"><span class="n">Bid efficiency savings</span><span class="v" id="r0a">$58K</span></div>
+        <div class="out-row"><span class="n">Win rate uplift value</span><span class="v" id="r0b">$724K</span></div>
+        <div class="out-row" style="padding-top:14px;border-top:2px solid #F6AE31;"><span class="n" style="font-weight:800;color:#0F172A;">Total — Contract Growth</span><span class="v" style="color:#1E88C7;" id="r0c">$782K</span></div>
+        <p style="font-size:.78rem;color:#94A3B8;margin-top:14px;line-height:1.65;">Win rate lift = bids × win rate lift % × avg contract value. Bid savings = bids × hrs saved × hourly rate. Sources: GovCon industry benchmarks. Replace with i3 actuals.</p>
+      </div>
+    </div>
+
+    <!-- Panel 1 — Workforce Readiness -->
+    <div class="panel">
+      <div class="area-card">
+        <div class="area-eyebrow" style="color:#16A34A;">02 · Workforce Readiness</div>
+        <h3>Staffing Speed &amp; Clearance Compliance</h3>
+
+        <div class="slider-row">
+          <div class="slider-label"><span>New contract staffing events / yr <span class="bench-tag">benchmark</span></span><span class="val" id="v10-val">18</span></div>
+          <input type="range" id="v10" min="2" max="60" value="18" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Days saved per staffing event <span class="bench-tag">benchmark</span></span><span class="val" id="v11-val">6 days</span></div>
+          <input type="range" id="v11" min="1" max="30" value="6" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Avg direct labor rate / person / day ($) <span class="bench-tag">benchmark</span></span><span class="val" id="v12-val">$620</span></div>
+          <input type="range" id="v12" min="200" max="1200" value="620" step="20" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Avg headcount per new contract <span class="bench-tag">benchmark</span></span><span class="val" id="v13-val">8 people</span></div>
+          <input type="range" id="v13" min="1" max="30" value="8" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Clearance lapses averted / yr <span class="bench-tag">benchmark</span></span><span class="val" id="v14-val">6</span></div>
+          <input type="range" id="v14" min="0" max="20" value="6" oninput="syncBva()"/>
+        </div>
+
+        <div class="area-result">
+          <div class="rv" id="r1" style="color:#16A34A;">$604K</div>
+          <div class="rl">Annual value — Workforce Readiness</div>
+        </div>
+      </div>
+
+      <div class="output-card">
+        <h3>How We Calculate It</h3>
+        <div class="out-row"><span class="n">Staffing speed savings</span><span class="v" id="r1a">$534K</span></div>
+        <div class="out-row"><span class="n">Clearance lapse cost averted</span><span class="v" id="r1b">$70K</span></div>
+        <div class="out-row" style="padding-top:14px;border-top:2px solid #16A34A;"><span class="n" style="font-weight:800;color:#0F172A;">Total — Workforce Readiness</span><span class="v" style="color:#16A34A;" id="r1c">$604K</span></div>
+        <p style="font-size:.78rem;color:#94A3B8;margin-top:14px;line-height:1.65;">Staffing savings = events × days saved × rate × headcount. Clearance lapse cost = $10–15K per remediation event. GovCon benchmarks — update with i3 actuals.</p>
+      </div>
+    </div>
+
+    <!-- Panel 2 — Program Visibility -->
+    <div class="panel">
+      <div class="area-card">
+        <div class="area-eyebrow" style="color:#7C3AED;">03 · Program Visibility</div>
+        <h3>Reporting Efficiency &amp; PM Productivity</h3>
+
+        <div class="slider-row">
+          <div class="slider-label"><span>Active programs being tracked <span class="bench-tag">benchmark</span></span><span class="val" id="v20-val">22</span></div>
+          <input type="range" id="v20" min="3" max="80" value="22" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Hours/month per program on manual reporting <span class="bench-tag">benchmark</span></span><span class="val" id="v21-val">8 hrs</span></div>
+          <input type="range" id="v21" min="1" max="30" value="8" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>PM hourly loaded cost ($) <span class="bench-tag">benchmark</span></span><span class="val" id="v22-val">$115</span></div>
+          <input type="range" id="v22" min="50" max="250" value="115" step="5" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>% of manual reporting time recovered <span class="bench-tag">benchmark</span></span><span class="val" id="v23-val">65%</span></div>
+          <input type="range" id="v23" min="20" max="90" value="65" oninput="syncBva()"/>
+        </div>
+
+        <div class="area-result">
+          <div class="rv" id="r2" style="color:#7C3AED;">$288K</div>
+          <div class="rl">Annual value — Program Visibility</div>
+        </div>
+      </div>
+
+      <div class="output-card">
+        <h3>How We Calculate It</h3>
+        <div class="out-row"><span class="n">PM reporting time recaptured</span><span class="v" id="r2a">$288K</span></div>
+        <div class="out-row"><span class="n">Reduced data-error rework</span><span class="v" id="r2b">—</span></div>
+        <div class="out-row" style="padding-top:14px;border-top:2px solid #7C3AED;"><span class="n" style="font-weight:800;color:#0F172A;">Total — Program Visibility</span><span class="v" style="color:#7C3AED;" id="r2c">$288K</span></div>
+        <p style="font-size:.78rem;color:#94A3B8;margin-top:14px;line-height:1.65;">PM savings = programs × hrs/mo × PM rate × recovery% × 12 months. GovCon benchmarks — confirm program count and PM rate with i3.</p>
+      </div>
+    </div>
+
+    <!-- Panel 3 — Data Foundation -->
+    <div class="panel">
+      <div class="area-card">
+        <div class="area-eyebrow" style="color:#FF6B00;">04 · Data Foundation</div>
+        <h3>Deduplication &amp; Reconciliation Savings</h3>
+
+        <div class="slider-row">
+          <div class="slider-label"><span>Est. duplicate / dirty records today (k) <span class="bench-tag">benchmark</span></span><span class="val" id="v30-val">8k</span></div>
+          <input type="range" id="v30" min="1" max="50" value="8" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Cost of acting on a bad record ($) <span class="bench-tag">benchmark</span></span><span class="val" id="v31-val">$35</span></div>
+          <input type="range" id="v31" min="5" max="150" value="35" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>Manual reconciliation FTEs <span class="bench-tag">benchmark</span></span><span class="val" id="v32-val">2</span></div>
+          <input type="range" id="v32" min="0" max="10" value="2" oninput="syncBva()"/>
+        </div>
+        <div class="slider-row">
+          <div class="slider-label"><span>FTE loaded annual cost ($K) <span class="bench-tag">benchmark</span></span><span class="val" id="v33-val">$110K</span></div>
+          <input type="range" id="v33" min="50" max="250" value="110" step="5" oninput="syncBva()"/>
+        </div>
+
+        <div class="area-result">
+          <div class="rv" id="r3" style="color:#FF6B00;">$500K</div>
+          <div class="rl">Annual value — Data Foundation</div>
+        </div>
+      </div>
+
+      <div class="output-card">
+        <h3>How We Calculate It</h3>
+        <div class="out-row"><span class="n">Bad-record cost elimination</span><span class="v" id="r3a">$280K</span></div>
+        <div class="out-row"><span class="n">Reconciliation FTE redeployment</span><span class="v" id="r3b">$220K</span></div>
+        <div class="out-row" style="padding-top:14px;border-top:2px solid #FF6B00;"><span class="n" style="font-weight:800;color:#0F172A;">Total — Data Foundation</span><span class="v" style="color:#FF6B00;" id="r3c">$500K</span></div>
+        <p style="font-size:.78rem;color:#94A3B8;margin-top:14px;line-height:1.65;">Dirty-record cost = duplicates × cost per bad record. FTE redeployment = FTEs × loaded annual cost × 100%. IBM/Gartner benchmarks — confirm with i3 data during design session.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROI grid -->
+  <div class="roi-grid">
+    <div class="roi-cell hl">
+      <div class="rv" id="r-total">$2.1M</div>
+      <div class="rl">Total Annual Value</div>
+    </div>
+    <div class="roi-cell">
+      <div class="rv">$200K</div>
+      <div class="rl">Investment — MDM + Governance Proposal</div>
+    </div>
+    <div class="roi-cell">
+      <div class="rv" id="r-roi">10.7×</div>
+      <div class="rl">Return on Investment (Year 1)</div>
+    </div>
+    <div class="roi-cell">
+      <div class="rv" id="r-pb">&lt;12 mo</div>
+      <div class="rl">Estimated Payback Period</div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-section">
+    <h3>Value by Focus Area</h3>
+    <div class="chart-wrap">
+      <canvas id="bva-chart"></canvas>
+    </div>
+  </div>
+
+  <!-- Assumptions -->
+  <div class="assumptions">
+    <h3>Model Assumptions &amp; Sources</h3>
+    <div class="assume-grid">
+      <div class="assume-item">
+        <b>700+ employees</b>
+        <span>i3's publicly stated team size. Used for headcount-sensitive calculations.</span>
+      </div>
+      <div class="assume-item">
+        <b>$200K investment</b>
+        <span>Informatica MDM IDMC ($150K) + Data Integration + Governance IPUs ($50K), per proposal line items.</span>
+      </div>
+      <div class="assume-item">
+        <b>IDMC already owned</b>
+        <span>$66,758.40 closed January 29, 2026. i3 self-implemented — no external SI cost.</span>
+      </div>
+      <div class="assume-item">
+        <b>GovCon benchmarks</b>
+        <span>All sliders default to GovCon industry benchmarks for defense contractors. Replace during design session.</span>
+      </div>
+      <div class="assume-item">
+        <b>IBM / Gartner data quality</b>
+        <span>Bad-record cost ($15–$35 per incident), FTE reconciliation load.</span>
+      </div>
+      <div class="assume-item">
+        <b>Win rate lift</b>
+        <span>Directional — 2.5% win rate improvement on existing pipeline is an industry estimate, not a guarantee.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-bar">
+    <p>Every number above is a starting point. The design session with Betsy, Ron, and Zak is where we replace benchmarks with i3 actuals and build a business case that's defensible to the board.</p>
+    <div class="cta-links">
+      <a href="mailto:jj.jackson@salesforce.com?subject=i3 MDM Design Session" class="primary">Schedule the Design Session →</a>
+      <a href="exec-summary.html" class="ghost">Executive Summary</a>
+      <a href="index.html" class="ghost">Full Microsite</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    Prepared by the Salesforce account team for Integration Innovation, Inc. (i3) · October 2026 · Confidential<br>
+    All values are directional estimates for executive discussion only. Not a guarantee of results.<br>
+    Informatica is a Salesforce company (acquired November 2025).
+  </div>
+</div>
+
+<script>
+const INVEST = 200000;
+let bChart;
+
+function fmt(n){
+  if(n>=1000000) return '$'+(n/1000000).toFixed(1)+'M';
+  if(n>=1000) return '$'+(n/1000).toFixed(0)+'K';
+  return '$'+Math.round(n);
+}
+
+function sv(id){return parseFloat(document.getElementById(id).value);}
+
+function syncBva(){
+  // Tab 0 — Contract Growth
+  const bids=sv('v00'), hrsSaved=sv('v01'), rate=sv('v02'), wrLift=sv('v03')/100, acv=sv('v04')*1e6;
+  const bidSav = bids*hrsSaved*rate;
+  const winLift = bids * wrLift * acv / bids * bids; // bids × lift_rate × ACV
+  const t0 = Math.round(bidSav + winLift);
+
+  // Tab 1 — Workforce
+  const events=sv('v10'), daysSaved=sv('v11'), dayRate=sv('v12'), hc=sv('v13'), lapses=sv('v14');
+  const staffSav = events*daysSaved*dayRate*hc;
+  const lapseSav = lapses*11500;
+  const t1 = Math.round(staffSav+lapseSav);
+
+  // Tab 2 — Program
+  const progs=sv('v20'), hrsMo=sv('v21'), pmRate=sv('v22'), recov=sv('v23')/100;
+  const pmSav = progs*hrsMo*pmRate*recov*12;
+  const t2 = Math.round(pmSav);
+
+  // Tab 3 — Data Foundation
+  const dups=sv('v30')*1000, badCost=sv('v31'), ftes=sv('v32'), fteCost=sv('v33')*1000;
+  const dupSav = dups*badCost;
+  const fteSav = ftes*fteCost;
+  const t3 = Math.round(dupSav+fteSav);
+
+  const total = t0+t1+t2+t3;
+  const roi = (total/INVEST).toFixed(1)+'×';
+  const pbMos = Math.round((INVEST/total)*12);
+  const pb = pbMos<=12 ? '<12 mo' : pbMos+' mo';
+
+  // Sliders display
+  document.getElementById('v00-val').textContent=sv('v00');
+  document.getElementById('v01-val').textContent=sv('v01')+' hrs';
+  document.getElementById('v02-val').textContent='$'+sv('v02');
+  document.getElementById('v03-val').textContent='+'+sv('v03')+'%';
+  document.getElementById('v04-val').textContent='$'+sv('v04')+'M';
+  document.getElementById('v10-val').textContent=sv('v10');
+  document.getElementById('v11-val').textContent=sv('v11')+' days';
+  document.getElementById('v12-val').textContent='$'+sv('v12');
+  document.getElementById('v13-val').textContent=sv('v13')+' people';
+  document.getElementById('v14-val').textContent=sv('v14');
+  document.getElementById('v20-val').textContent=sv('v20');
+  document.getElementById('v21-val').textContent=sv('v21')+' hrs';
+  document.getElementById('v22-val').textContent='$'+sv('v22');
+  document.getElementById('v23-val').textContent=sv('v23')+'%';
+  document.getElementById('v30-val').textContent=sv('v30')+'k';
+  document.getElementById('v31-val').textContent='$'+sv('v31');
+  document.getElementById('v32-val').textContent=sv('v32');
+  document.getElementById('v33-val').textContent='$'+sv('v33')+'K';
+
+  // Area results
+  document.getElementById('r0').textContent=fmt(t0);
+  document.getElementById('r0a').textContent=fmt(bidSav);
+  document.getElementById('r0b').textContent=fmt(winLift);
+  document.getElementById('r0c').textContent=fmt(t0);
+  document.getElementById('r1').textContent=fmt(t1);
+  document.getElementById('r1a').textContent=fmt(staffSav);
+  document.getElementById('r1b').textContent=fmt(lapseSav);
+  document.getElementById('r1c').textContent=fmt(t1);
+  document.getElementById('r2').textContent=fmt(t2);
+  document.getElementById('r2a').textContent=fmt(t2);
+  document.getElementById('r2c').textContent=fmt(t2);
+  document.getElementById('r3').textContent=fmt(t3);
+  document.getElementById('r3a').textContent=fmt(dupSav);
+  document.getElementById('r3b').textContent=fmt(fteSav);
+  document.getElementById('r3c').textContent=fmt(t3);
+
+  // Totals
+  document.getElementById('b-total').textContent=fmt(total);
+  document.getElementById('b-payback').textContent=pb;
+  document.getElementById('r-total').textContent=fmt(total);
+  document.getElementById('r-roi').textContent=roi;
+  document.getElementById('r-pb').textContent=pb;
+
+  // Chart
+  if(bChart){
+    bChart.data.datasets[0].data=[t0,t1,t2,t3];
+    bChart.update();
+  }
+}
+
+function bSwitch(i){
+  const panels=document.querySelectorAll('#bpanels .panel');
+  const tabs=document.querySelectorAll('.tab');
+  panels.forEach((p,idx)=>{p.className='panel'+(idx===i?' active':'');});
+  tabs.forEach((t,idx)=>{t.className='tab'+(idx===i?' active':'');});
+}
+
+window.addEventListener('DOMContentLoaded',function(){
+  const ctx=document.getElementById('bva-chart').getContext('2d');
+  bChart=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:['Contract Growth\n& Capture','Workforce\nReadiness','Program\nVisibility','Data\nFoundation'],
+      datasets:[{
+        data:[782000,604000,288000,500000],
+        backgroundColor:['#1E88C7','#16A34A','#7C3AED','#FF6B00'],
+        borderRadius:8,
+        borderSkipped:false
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+fmt(c.raw);} }}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:11,weight:'800'}}},
+        y:{grid:{color:'rgba(0,0,0,.06)'},ticks:{callback:v=>fmt(v),font:{size:10}}}
+      }
+    }
+  });
+  syncBva();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>i3 × Salesforce — One Trusted Record for Integration Innovation, Inc.</title>
+<meta name="description" content="Salesforce executive microsite for Integration Innovation, Inc. (i3) — Informatica MDM, Data Quality, and Governance."/>
+<link rel="icon" type="image/png" href="https://i3-corps.com/images/site/i3-square.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   BRAND SYSTEM — Integration Innovation, Inc. (i3)
+   Primary:   #F6AE31  amber/gold
+   Secondary: #1D222A  dark charcoal
+   Accent:    #1E88C7  blue
+   Light:     #F7F5F2  off-white
+═══════════════════════════════════════════════════════════════ */
+:root{
+  --brand-primary:   #F6AE31;
+  --brand-secondary: #1D222A;
+  --brand-accent:    #1E88C7;
+  --brand-light:     #F7F5F2;
+  --sf-blue:         #0274BE;
+  --sf-green:        #72BF44;
+  --infa-orange:     #FF6B00;
+  --mdm-blue:        #0E4FA3;
+  --dq-green:        #16A34A;
+  --gov-purple:      #7C3AED;
+  --font-main:       'Inter',system-ui,-apple-system,sans-serif;
+  --ink:             #0F172A;
+  --muted:           #64748B;
+  --line:            #E2E8F0;
+  --i3-red:          #C8102E;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity;}
+body{font-family:var(--font-main);background:#000813;color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;}
+
+/* ── Slide shell ── */
+.slide{position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;justify-content:center;scroll-snap-align:start;overflow:hidden;}
+.slide.tall{min-height:100vh;justify-content:flex-start;overflow:visible;}
+.slide-inner{position:relative;z-index:2;width:100%;max-width:1180px;margin:0 auto;padding:78px 56px 56px;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:5px 14px;border-radius:30px;margin-bottom:16px;}
+.eyebrow.on-dark{color:var(--brand-primary);background:rgba(246,174,49,.1);border:1px solid rgba(246,174,49,.3);}
+.eyebrow.on-light{color:var(--brand-accent);background:rgba(30,136,199,.08);border:1px solid rgba(30,136,199,.22);}
+h2.sh{font-size:clamp(1.7rem,3.2vw,2.6rem);font-weight:900;letter-spacing:-.025em;line-height:1.12;}
+p.ss{font-size:.95rem;line-height:1.7;max-width:640px;margin-top:12px;}
+.on-dark h2.sh,h2.sh.on-dark{color:#fff;}
+.dark-bg{background:linear-gradient(160deg,var(--brand-secondary) 0%,#0A0E13 100%);}
+.dot-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(246,174,49,.05) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
+
+/* ── Progress bar + top nav ── */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--brand-primary),var(--brand-accent));z-index:460;transition:width .15s linear;}
+#topnav{position:fixed;top:0;left:0;right:0;height:62px;z-index:440;background:rgba(15,18,24,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.1);box-shadow:0 4px 24px rgba(0,0,0,.22);}
+.tn-inner{position:relative;max-width:1520px;margin:0 auto;height:100%;padding:0 26px;display:flex;align-items:center;gap:22px;}
+.tn-lock{display:flex;align-items:center;gap:11px;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;}
+.tn-lock > span{font-size:13px;font-weight:800;color:#fff;letter-spacing:-.01em;}
+.tn-lock .tn-div{width:1px;height:22px;background:rgba(255,255,255,.22);display:block;}
+.tn-lock .tn-sp{display:flex;flex-direction:column;line-height:1;align-items:flex-start;}
+.tn-lock .tn-sp b{font-size:13px;font-weight:900;color:#fff;letter-spacing:.06em;}
+.tn-lock .tn-sp em{font-size:7px;font-style:normal;font-weight:800;letter-spacing:.19em;text-transform:uppercase;color:var(--brand-primary);margin-top:2.5px;}
+.tn-links{display:flex;align-items:center;gap:2px;margin-left:auto;}
+.tn-link{background:none;border:none;cursor:pointer;font-family:inherit;font-size:11.5px;font-weight:700;color:rgba(255,255,255,.55);padding:8px 11px;border-radius:8px;white-space:nowrap;transition:color .2s,background .2s;position:relative;}
+.tn-link:hover{color:#fff;background:rgba(255,255,255,.07);}
+.tn-link.on{color:#fff;font-weight:800;background:rgba(246,174,49,.13);}
+.tn-link.on::after{content:'';position:absolute;left:11px;right:11px;bottom:2px;height:2px;border-radius:2px;background:var(--brand-primary);}
+#tn-bvc{background:rgba(246,174,49,.12);border:1px solid rgba(246,174,49,.3);border-radius:9px;color:var(--brand-primary)!important;font-weight:800!important;animation:bvcPulse 2.4s ease-out infinite;}
+@keyframes bvcPulse{0%,100%{box-shadow:0 0 0 0 rgba(246,174,49,.5);}70%{box-shadow:0 0 0 8px rgba(246,174,49,0);}}
+#tn-burger{display:none;margin-left:auto;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:9px;width:38px;height:34px;cursor:pointer;align-items:center;justify-content:center;}
+#tn-burger span{display:block;width:16px;height:1.8px;background:#fff;border-radius:2px;position:relative;transition:all .25s;}
+#tn-burger span::before,#tn-burger span::after{content:'';position:absolute;left:0;width:16px;height:1.8px;background:#fff;border-radius:2px;transition:all .25s;}
+#tn-burger span::before{top:-5px;}
+#tn-burger span::after{top:5px;}
+#tn-burger.open span{background:transparent;}
+#tn-burger.open span::before{top:0;transform:rotate(45deg);}
+#tn-burger.open span::after{top:0;transform:rotate(-45deg);}
+@media(max-width:1100px){
+  #tn-burger{display:flex;}
+  .tn-links{position:absolute;top:62px;left:0;right:0;margin:0;flex-direction:column;align-items:stretch;gap:0;background:#0A0E13;border-bottom:1px solid rgba(255,255,255,.12);box-shadow:0 14px 34px rgba(0,0,0,.44);padding:6px;display:none;max-height:calc(100vh - 62px);overflow-y:auto;}
+  .tn-links.open{display:flex;}
+  .tn-link{text-align:left;padding:10px 14px;font-size:12.5px;}
+  .tn-link.on::after{display:none;}
+}
+#dotnav{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:350;display:flex;flex-direction:column;gap:14px;align-items:flex-end;}
+.dot{position:relative;width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(255,255,255,.45);background:transparent;cursor:pointer;transition:all .28s cubic-bezier(.4,0,.2,1);padding:0;}
+.dot:hover{border-color:var(--brand-primary);transform:scale(1.25);}
+.dot.on{width:15px;height:15px;background:var(--brand-primary);border-color:var(--brand-primary);box-shadow:0 0 14px rgba(246,174,49,.65);}
+.dot.light{border-color:rgba(29,34,42,.4);}
+.dot.light.on{background:var(--brand-accent);border-color:var(--brand-accent);}
+.dot .tip{position:absolute;right:24px;top:50%;transform:translateY(-50%) translateX(6px);white-space:nowrap;background:rgba(29,34,42,.95);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:5px 11px;border-radius:7px;opacity:0;pointer-events:none;transition:all .22s;}
+.dot:hover .tip{opacity:1;transform:translateY(-50%) translateX(0);}
+
+/* ── Scroll cue ── */
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:5;}
+.scroll-cue span{font-size:9px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.scroll-cue .chev{animation:bounce 1.6s ease-in-out infinite;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 1 — HERO
+═══════════════════════════════════════════════════════════════ */
+#s1{background:linear-gradient(160deg,var(--brand-secondary) 0%,#0A0E13 100%);}
+#s1::before{content:'';position:absolute;inset:0;background-image:
+  linear-gradient(-58deg,transparent 0 58%,rgba(246,174,49,.04) 58% 60%,rgba(246,174,49,.015) 60% 66%,transparent 66%),
+  radial-gradient(rgba(30,136,199,.06) 1px,transparent 1px);
+  background-size:100% 100%,40px 40px;pointer-events:none;}
+.hero-wrap{position:relative;z-index:3;max-width:1400px;margin:0 auto;padding:98px 60px 44px;width:100%;
+  display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:60px;align-items:center;}
+.hero-col-l{min-width:0;}
+.hero-h1{font-size:clamp(2.4rem,5.6vw,4.5rem);font-weight:900;color:#fff;letter-spacing:-.035em;line-height:1.02;margin:0;}
+.hero-h1 .accent{background:linear-gradient(95deg,var(--brand-primary),#FFD080);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero-sub{font-size:1.02rem;color:rgba(255,255,255,.62);line-height:1.72;max-width:600px;margin-top:20px;}
+.stat-pills{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;}
+.stat-pill{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:13px;padding:13px 20px;backdrop-filter:blur(6px);}
+.stat-pill .v{font-size:1.28rem;font-weight:900;color:#fff;letter-spacing:-.02em;}
+.stat-pill .v em{font-style:normal;color:var(--brand-primary);}
+.stat-pill .l{font-size:9.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.44);margin-top:4px;}
+.pain-pills{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px;}
+.pain-pill{display:flex;align-items:center;gap:13px;background:rgba(30,136,199,.12);border:1.5px solid rgba(30,136,199,.35);border-radius:14px;padding:16px 21px;box-shadow:0 5px 20px rgba(30,136,199,.1);transition:all .24s cubic-bezier(.4,0,.2,1);}
+.pain-pill:hover{background:rgba(30,136,199,.2);border-color:rgba(30,136,199,.6);transform:translateY(-2px);}
+.pain-pill svg{flex-shrink:0;width:24px;height:24px;}
+.pain-pill span{font-size:13.5px;font-weight:800;color:rgba(255,255,255,.93);letter-spacing:-.005em;}
+.hero-products{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:34px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);}
+.hero-products .lbl{font-size:9.5px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.prod-logo{display:flex;align-items:center;gap:8px;}
+.prod-logo span{font-size:12.5px;font-weight:800;color:rgba(255,255,255,.88);white-space:nowrap;}
+/* Hero right column KPI */
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;}
+.hero-visual::before{content:'';position:absolute;width:118%;padding-bottom:118%;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(246,174,49,.2) 0%,rgba(246,174,49,.07) 38%,transparent 68%);}
+.kpi-hero{position:relative;width:100%;max-width:440px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:13px;padding:24px 30px 18px;backdrop-filter:blur(6px);}
+.kh-eyebrow{display:block;font-size:9.5px;font-weight:900;letter-spacing:.17em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.kh-body{min-height:262px;display:flex;flex-direction:column;justify-content:center;padding:14px 0 10px;transition:opacity .2s ease,transform .2s ease;}
+.kh-body.swap{opacity:0;transform:translateY(8px);}
+.kh-label{font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--brand-primary);filter:brightness(1.1);line-height:1.3;}
+.kh-label::before{content:'';display:block;width:34px;height:3px;border-radius:2px;background:var(--brand-primary);margin-bottom:12px;}
+.kh-value{font-size:6rem;font-weight:900;color:#fff;letter-spacing:-.045em;line-height:1;margin-top:14px;white-space:nowrap;}
+.kh-line{margin-top:16px;max-width:350px;font-size:14px;font-weight:600;line-height:1.55;color:rgba(255,255,255,.7);}
+.kh-line b{color:#fff;font-weight:800;}
+.kh-bar{height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-top:8px;transition:opacity .3s;}
+.kh-bar i{display:block;height:100%;width:0;background:var(--brand-primary);}
+.kpi-hero.stopped .kh-bar{opacity:0;}
+.kh-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px;}
+.kh-dots{display:flex;gap:4px;}
+.kh-dots button{width:20px;height:20px;padding:0;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.kh-dots button::before{content:'';width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25);transition:background .3s,transform .3s;}
+.kh-dots button:hover::before{background:rgba(255,255,255,.5);}
+.kh-dots button.active::before{background:var(--brand-primary);transform:scale(1.35);}
+.kh-link{border:none;background:transparent;padding:6px 2px;font-family:inherit;font-size:12px;font-weight:800;color:rgba(255,255,255,.78);cursor:pointer;transition:color .2s;}
+.kh-link:hover{color:var(--brand-primary);}
+.kh-note{margin:10px 0 0;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);font-size:10.5px;font-weight:600;color:rgba(255,255,255,.42);line-height:1.5;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 2 — FLIP CARDS / THE CHALLENGE
+═══════════════════════════════════════════════════════════════ */
+#s2{background:linear-gradient(165deg,#FFFFFF 0%,var(--brand-light) 100%);}
+.flip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px;}
+.flip{perspective:1600px;height:400px;cursor:pointer;}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .72s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;}
+.flip:hover .flip-inner,.flip.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:26px 24px;display:flex;flex-direction:column;overflow:hidden;}
+.flip-front{background:#fff;border:1px solid var(--line);box-shadow:0 4px 22px rgba(30,136,199,.07);}
+.flip-front::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--brand-accent);}
+.flip-back{transform:rotateY(180deg);background:linear-gradient(155deg,var(--brand-secondary),#0A1525);border:1px solid rgba(30,136,199,.4);box-shadow:0 12px 40px rgba(29,34,42,.3);}
+.flip-num{font-size:10px;font-weight:900;letter-spacing:.16em;color:var(--brand-accent);text-transform:uppercase;}
+.flip-front h3{font-size:1.28rem;font-weight:900;color:var(--ink);margin:8px 0 12px;letter-spacing:-.02em;line-height:1.15;}
+.flip-front p{font-size:.85rem;color:var(--muted);line-height:1.68;}
+.pain-facts{margin-top:auto;display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px dashed var(--line);}
+.pain-fact{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;font-weight:600;color:#46505A;line-height:1.5;}
+.pain-fact b{color:var(--brand-accent);font-weight:900;}
+.flip-cta{position:absolute;bottom:14px;right:18px;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#CBD5E1;}
+.flip-back .sf-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(246,174,49,.14);border:1px solid rgba(246,174,49,.4);border-radius:20px;padding:4px 12px;font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--brand-primary);align-self:flex-start;}
+.flip-back h4{font-size:1.14rem;font-weight:900;color:#fff;margin:14px 0 12px;line-height:1.24;letter-spacing:-.015em;}
+.flip-back ul{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.flip-back li{display:flex;gap:10px;font-size:.82rem;color:rgba(255,255,255,.76);line-height:1.6;}
+.flip-back li svg{flex-shrink:0;margin-top:3px;}
+.flip-back .resolve{margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-primary);}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 3 — WHAT YOU ALREADY OWN
+═══════════════════════════════════════════════════════════════ */
+#s3{background:linear-gradient(165deg,#FFFFFF 0%,var(--brand-light) 100%);}
+.own-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center;margin-top:30px;}
+.own-fact{background:#fff;border:1px solid var(--line);border-left:4px solid var(--infa-orange);border-radius:14px;padding:22px 24px;margin-bottom:16px;box-shadow:0 4px 18px rgba(0,0,0,.05);}
+.own-fact .tag{display:inline-block;font-size:8.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;background:rgba(255,107,0,.1);color:var(--infa-orange);border:1px solid rgba(255,107,0,.3);border-radius:20px;padding:3px 10px;margin-bottom:9px;}
+.own-fact h3{font-size:1.08rem;font-weight:900;color:var(--ink);margin-bottom:6px;letter-spacing:-.015em;}
+.own-fact p{font-size:.84rem;color:var(--muted);line-height:1.68;}
+.own-metric{display:flex;gap:12px;margin-top:12px;}
+.own-metric div{background:var(--brand-light);border:1px solid rgba(30,136,199,.18);border-radius:10px;padding:10px 14px;flex:1;}
+.own-metric div b{display:block;font-size:1.2rem;font-weight:900;color:var(--brand-accent);letter-spacing:-.02em;}
+.own-metric div span{display:block;font-size:8.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+.own-next{margin-top:8px;background:linear-gradient(140deg,var(--brand-secondary),#0A1525);border-radius:14px;padding:18px 20px;}
+.own-next .label{font-size:9.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--brand-primary);margin-bottom:8px;}
+.own-next p{font-size:.84rem;color:rgba(255,255,255,.75);line-height:1.68;}
+.own-visual{position:relative;}
+.flow-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:10px;box-shadow:0 3px 12px rgba(0,0,0,.06);position:relative;transition:all .25s;}
+.flow-card::after{content:'↓';position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:16px;color:var(--brand-accent);font-weight:900;}
+.flow-card:last-child::after{display:none;}
+.flow-card .fc-label{font-size:8.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;}
+.flow-card .fc-name{font-size:.96rem;font-weight:800;color:var(--ink);}
+.flow-card .fc-detail{font-size:.8rem;color:var(--muted);margin-top:3px;}
+.flow-card .fc-status{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:20px;padding:3px 10px;}
+.fc-status.live{background:rgba(22,163,74,.12);color:#16A34A;border:1px solid rgba(22,163,74,.3);}
+.fc-status.proposed{background:rgba(246,174,49,.12);color:var(--brand-primary);border:1px solid rgba(246,174,49,.3);}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 4 — PLATFORM OVERVIEW + DRAWER
+═══════════════════════════════════════════════════════════════ */
+#s4{background:linear-gradient(160deg,#0A1525 0%,var(--brand-secondary) 100%);}
+.plat-cols{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;margin-top:30px;}
+.prod-card{display:flex;align-items:flex-start;gap:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-left:3px solid var(--card-c,var(--brand-accent));border-radius:15px;padding:20px 22px;margin-bottom:14px;cursor:pointer;transition:all .26s cubic-bezier(.4,0,.2,1);}
+.prod-card:hover{background:rgba(255,255,255,.08);transform:translateX(7px);border-color:rgba(255,255,255,.2);border-left-color:var(--card-c,var(--brand-accent));box-shadow:0 10px 34px rgba(0,0,0,.28);}
+.prod-card .ico{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--card-c,var(--brand-accent));}
+.prod-card h3{font-size:1.04rem;font-weight:900;color:#fff;margin-bottom:5px;letter-spacing:-.015em;}
+.prod-card p{font-size:.8rem;color:rgba(255,255,255,.56);line-height:1.6;}
+.prod-card .scope{display:inline-block;margin-top:9px;font-size:8.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--sf-green);background:rgba(114,191,68,.13);border:1px solid rgba(114,191,68,.34);border-radius:20px;padding:3px 10px;}
+.prod-card .scope.road{color:rgba(255,255,255,.45);background:rgba(255,255,255,.04);border-style:dashed;border-color:rgba(255,255,255,.2);}
+.prod-card .arrow{margin-left:auto;align-self:center;color:rgba(255,255,255,.3);transition:transform .26s,color .26s;}
+.prod-card:hover .arrow{transform:translateX(4px);color:var(--brand-primary);}
+.plat-visual{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:420px;gap:16px;}
+.infa-hub{width:260px;height:260px;overflow:visible;filter:drop-shadow(0 18px 44px rgba(255,107,0,.32));}
+.plat-caption{max-width:380px;text-align:center;font-size:.82rem;line-height:1.65;color:rgba(255,255,255,.62);margin:6px 0 0;}
+.plat-caption b{color:#fff;}
+/* Drawer */
+#drawer-scrim{position:fixed;inset:0;background:rgba(0,8,19,.62);backdrop-filter:blur(3px);z-index:420;opacity:0;pointer-events:none;transition:opacity .34s;}
+#drawer-scrim.open{opacity:1;pointer-events:auto;}
+#drawer{position:fixed;top:0;right:0;height:100%;width:min(470px,92vw);background:#fff;z-index:430;transform:translateX(100%);transition:transform .42s cubic-bezier(.4,0,.2,1);box-shadow:-24px 0 70px rgba(0,0,0,.35);display:flex;flex-direction:column;}
+#drawer.open{transform:translateX(0);}
+.drawer-head{padding:30px 32px 22px;border-bottom:1px solid var(--line);position:relative;}
+.drawer-head .ico{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.drawer-head h3{font-size:1.5rem;font-weight:900;color:var(--ink);letter-spacing:-.025em;}
+.drawer-head p{font-size:.85rem;color:var(--muted);margin-top:7px;line-height:1.6;}
+#drawer-close{position:absolute;top:24px;right:26px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;color:var(--muted);font-size:17px;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+#drawer-close:hover{background:var(--brand-light);color:var(--ink);}
+.drawer-body{padding:26px 32px;overflow-y:auto;flex:1;}
+.drawer-body h5{font-size:9.5px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.cap{display:flex;gap:13px;margin-bottom:17px;}
+.cap .bullet{width:22px;height:22px;border-radius:6px;background:var(--brand-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.cap b{display:block;font-size:.88rem;font-weight:800;color:var(--ink);margin-bottom:4px;}
+.cap p{font-size:.81rem;color:var(--muted);line-height:1.66;}
+.growth-callout{margin-top:22px;background:linear-gradient(140deg,var(--brand-secondary),#0A1525);border-radius:15px;padding:22px;}
+.growth-callout .tag{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-primary);margin-bottom:10px;}
+.growth-callout p{font-size:.85rem;color:rgba(255,255,255,.82);line-height:1.7;}
+.growth-callout .metric{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);display:flex;gap:22px;}
+.growth-callout .metric div b{display:block;font-size:1.18rem;font-weight:900;color:#fff;}
+.growth-callout .metric div span{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.44);}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 5 — GOLDEN RECORD DEMO (desktop browser frame)
+═══════════════════════════════════════════════════════════════ */
+#s5{background:linear-gradient(160deg,var(--brand-secondary) 0%,#0A1525 100%);}
+.demo-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;align-items:center;margin-top:24px;}
+.demo-context{min-width:0;}
+#demo5-pill{display:inline-block;font-size:10px;font-weight:800;color:var(--brand-primary);text-transform:uppercase;letter-spacing:.1em;border:1px solid rgba(246,174,49,.3);background:rgba(246,174,49,.08);padding:4px 12px;border-radius:20px;margin-bottom:16px;}
+#demo5-title{font-size:clamp(1.4rem,2.6vw,2rem);font-weight:900;color:#fff;line-height:1.18;margin-bottom:14px;letter-spacing:-.025em;}
+#demo5-body{color:rgba(255,255,255,.6);font-size:.88rem;line-height:1.75;margin-bottom:20px;max-width:360px;}
+#demo5-hint{display:flex;align-items:center;gap:8px;}
+#demo5-hint span:first-child{font-size:18px;}
+#demo5-hint span:last-child{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);}
+.demo5-dots{display:flex;justify-content:flex-start;gap:6px;padding:14px 0 4px;margin-top:20px;}
+.demo5-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);transition:background .3s,transform .3s;}
+.demo5-dot.active{background:var(--brand-primary);transform:scale(1.35);}
+/* Browser frame */
+.browser-frame{border-radius:13px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.1);background:#1E2938;cursor:pointer;position:relative;}
+.bf-bar{background:#2D3748;padding:9px 14px;display:flex;align-items:center;gap:9px;border-bottom:1px solid rgba(255,255,255,.08);}
+.bf-dots{display:flex;gap:6px;}
+.bf-dots i{width:10px;height:10px;border-radius:50%;display:block;}
+.bf-dots i:nth-child(1){background:#FF5F57;}
+.bf-dots i:nth-child(2){background:#FEBC2E;}
+.bf-dots i:nth-child(3){background:#28C840;}
+.bf-url{flex:1;background:rgba(255,255,255,.08);border-radius:6px;padding:5px 12px;font-size:10px;color:rgba(255,255,255,.5);font-family:ui-monospace,monospace;display:flex;align-items:center;gap:6px;}
+.bf-url::before{content:'🔒';font-size:9px;}
+.bf-body{min-height:380px;position:relative;overflow:hidden;}
+.demo5-screen{position:absolute;inset:0;transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.2,1);background:#F8FAFC;overflow:auto;}
+.demo5-screen.ds5-active{transform:translateX(0);}
+.demo5-screen.ds5-exiting{transform:translateX(-100%);}
+/* Screen inner helpers */
+.scr-head{background:linear-gradient(135deg,var(--brand-secondary),#0A1525);padding:14px 18px;display:flex;align-items:center;gap:10px;}
+.scr-head .app-name{font-size:12px;font-weight:900;color:#fff;letter-spacing:.04em;}
+.scr-head .badge{font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;background:rgba(246,174,49,.2);color:var(--brand-primary);border:1px solid rgba(246,174,49,.4);border-radius:20px;padding:2.5px 8px;margin-left:auto;}
+.scr-body{padding:16px 18px;background:#F8FAFC;}
+.scr-section{font-size:8.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:#94A3B8;margin:0 0 9px;}
+.scr-card{background:#fff;border:1px solid #E6EBF2;border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+.scr-row{display:flex;align-items:center;gap:8px;}
+.scr-kv{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #F4F6FA;font-size:10px;}
+.scr-kv:last-child{border-bottom:none;}
+.scr-kv span{color:#94A3B8;font-weight:600;}
+.scr-kv b{color:#0B2545;font-weight:800;text-align:right;max-width:60%;}
+.scr-chip{font-size:7.5px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;padding:2.5px 7px;border-radius:20px;}
+.scr-chip.warn{background:#FEF3C7;color:#B45309;}
+.scr-chip.good{background:#DCFCE7;color:#15803D;}
+.scr-chip.info{background:rgba(30,136,199,.1);color:var(--brand-accent);}
+.scr-chip.amber{background:rgba(246,174,49,.15);color:#92600A;}
+.scr-chip.purple{background:#F3E8FF;color:#7C3AED;}
+.scr-reveal{opacity:0;transform:translateY(8px);transition:all .45s cubic-bezier(.4,0,.2,1);}
+.scr-reveal.in{opacity:1;transform:translateY(0);}
+.scr-progress{height:6px;border-radius:3px;background:#E6EBF2;overflow:hidden;margin-top:5px;}
+.scr-progress i{display:block;height:100%;border-radius:3px;width:0;transition:width 1.1s cubic-bezier(.4,0,.2,1);}
+.scr-badge-success{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#F0FDF4,#fff);border:1px solid rgba(22,163,74,.35);border-radius:10px;padding:12px 14px;}
+.replay-overlay{position:absolute;inset:0;background:rgba(29,34,42,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0;pointer-events:none;transition:opacity .3s;}
+.replay-overlay.show{opacity:1;pointer-events:auto;}
+.replay-btn{background:var(--brand-primary);color:#fff;border:none;border-radius:10px;padding:12px 24px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 6 — BEFORE / AFTER
+═══════════════════════════════════════════════════════════════ */
+#s6{background:linear-gradient(165deg,#FFFFFF 0%,var(--brand-light) 100%);}
+.toggle-wrap{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:30px;padding:4px;gap:3px;box-shadow:0 3px 14px rgba(29,34,42,.08);}
+.toggle-wrap button{border:none;background:transparent;padding:9px 26px;border-radius:26px;font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--muted);cursor:pointer;transition:all .28s;}
+.toggle-wrap button.on[data-state="before"]{color:#fff;background:var(--brand-accent);box-shadow:0 4px 14px rgba(30,136,199,.3);}
+.toggle-wrap button.on[data-state="after"]{color:#fff;background:var(--dq-green);box-shadow:0 4px 14px rgba(22,163,74,.32);}
+.ba-stage{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:20px;position:relative;}
+.ba-col{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 4px 16px rgba(0,0,0,.05);transition:all .5s ease;}
+.ba-col.hidden{opacity:.25;transform:scale(.97);}
+.ba-col-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.ba-col-header .label{font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;}
+.ba-col-header .label.before-label{color:var(--brand-accent);}
+.ba-col-header .label.after-label{color:var(--dq-green);}
+.ba-system{display:flex;align-items:center;gap:10px;background:var(--brand-light);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:6px;}
+.ba-system .icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;}
+.ba-system .name{font-size:12px;font-weight:800;color:var(--ink);}
+.ba-system .detail{font-size:10px;color:var(--muted);}
+.ba-conflict{margin-top:4px;font-size:9px;font-weight:800;color:var(--i3-red);background:rgba(200,16,46,.08);border:1px solid rgba(200,16,46,.2);border-radius:6px;padding:3px 8px;display:inline-block;}
+.ba-arrow{text-align:center;font-size:1.5rem;color:var(--brand-accent);margin:4px 0;}
+.ba-golden{background:linear-gradient(135deg,#F0FDF4,#fff);border:2px solid rgba(22,163,74,.35);border-radius:12px;padding:14px;}
+.ba-golden .g-label{font-size:8.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--dq-green);margin-bottom:8px;}
+.ba-tag{display:inline-flex;align-items:center;gap:4px;background:#F3E8FF;color:var(--gov-purple);border:1px solid rgba(124,58,237,.25);border-radius:20px;padding:2px 8px;font-size:8px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin:2px;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 7 — ARCHITECTURE
+═══════════════════════════════════════════════════════════════ */
+#s7{background:linear-gradient(160deg,#0A1525 0%,var(--brand-secondary) 100%);}
+.arch-stack{display:flex;flex-direction:column;gap:8px;margin-top:18px;}
+.layer{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-radius:13px;transition:background .28s,border-color .28s;}
+.layer:hover,.layer.open{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.2);}
+.layer-head{display:grid;grid-template-columns:150px 1fr 22px;gap:22px;align-items:center;padding:10px 20px;cursor:pointer;border-radius:13px;outline:none;}
+.layer-head:focus-visible{box-shadow:0 0 0 2px rgba(246,174,49,.55);}
+.layer .lnum{display:flex;align-items:center;gap:11px;}
+.layer .lnum b{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.layer .lnum span{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.72);line-height:1.25;}
+.layer .lbody{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lchip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:9px;padding:5px 12px;font-size:11px;font-weight:700;color:rgba(255,255,255,.82);}
+.lchip.live{background:rgba(246,174,49,.13);border-color:rgba(246,174,49,.4);color:#F6AE31;}
+.lchip.grn{background:rgba(22,163,74,.13);border-color:rgba(22,163,74,.4);color:#4ADE80;}
+.lchip.blu{background:rgba(30,136,199,.18);border-color:rgba(30,136,199,.45);color:#7FC6F2;}
+.lchip.tbd{border-style:dashed;color:rgba(255,255,255,.5);background:transparent;}
+.lchip.purple{background:rgba(124,58,237,.18);border-color:rgba(124,58,237,.45);color:#C4B5FD;}
+.layer.active-layer .lnum b{background:var(--brand-primary);color:var(--brand-secondary);}
+.layer-chev{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:transform .38s cubic-bezier(.4,0,.2,1),background .2s;}
+.layer-head:hover .layer-chev{background:rgba(255,255,255,.1);color:#fff;}
+.layer.open .layer-chev{transform:rotate(180deg);}
+.layer-more{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .38s cubic-bezier(.4,0,.2,1),opacity .38s cubic-bezier(.4,0,.2,1);}
+.layer.open .layer-more{grid-template-rows:1fr;opacity:1;}
+.layer-more-in{overflow:hidden;min-height:0;}
+.layer-more-in p{margin:0 20px 0 192px;padding:2px 42px 14px 0;font-size:.82rem;line-height:1.6;color:rgba(255,255,255,.72);}
+.layer-more-in p b{color:#fff;}
+.arch-note{margin-top:20px;display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,.035);border:1px dashed rgba(255,255,255,.16);border-radius:13px;padding:16px 20px;}
+.arch-note p{font-size:.8rem;color:rgba(255,255,255,.55);line-height:1.68;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 8 — BUILT FOR YOUR LEADERS
+═══════════════════════════════════════════════════════════════ */
+#s8{background:linear-gradient(165deg,#EEF3FA 0%,#DFE9F6 100%);}
+.leaders-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:28px;}
+.leader-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 4px 20px rgba(29,34,42,.07);transition:all .26s;border-top:4px solid var(--lc,var(--brand-accent));}
+.leader-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(29,34,42,.14);}
+.leader-avatar{width:52px;height:52px;border-radius:14px;background:var(--lc,var(--brand-accent));display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:900;margin-bottom:14px;}
+.leader-name{font-size:1.1rem;font-weight:900;color:var(--ink);letter-spacing:-.02em;}
+.leader-title{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lc,var(--brand-accent));margin-top:2px;margin-bottom:12px;}
+.leader-now{background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+.leader-now .hdr{font-size:8.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--dq-green);margin-bottom:5px;display:flex;align-items:center;gap:5px;}
+.leader-now p{font-size:.82rem;color:#134E4A;line-height:1.6;}
+.leader-road{background:rgba(246,174,49,.08);border:1px solid rgba(246,174,49,.2);border-radius:10px;padding:12px 14px;}
+.leader-road .hdr{font-size:8.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#92600A;margin-bottom:5px;display:flex;align-items:center;gap:5px;}
+.leader-road p{font-size:.82rem;color:#78350F;line-height:1.6;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 9 — BUSINESS VALUE CALCULATOR
+═══════════════════════════════════════════════════════════════ */
+#s9{background:linear-gradient(160deg,#0A1525 0%,var(--brand-secondary) 55%,#091220 100%);}
+.inv-strip{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:20px 24px;margin-top:24px;}
+.inv-strip .hd{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.inv-strip .hd b{font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-primary);}
+.inv-strip .hd span{font-size:10.5px;color:rgba(255,255,255,.45);}
+.inv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.inv-cell{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px 16px;}
+.inv-cell.hero{border-color:rgba(246,174,49,.42);background:rgba(246,174,49,.07);}
+.inv-cell .v{font-size:1.45rem;font-weight:900;color:#fff;letter-spacing:-.03em;}
+.inv-cell.hero .v{color:var(--brand-primary);}
+.inv-cell .l{font-size:9px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-top:5px;line-height:1.4;}
+.inv-cell .n{font-size:9.5px;color:rgba(255,255,255,.55);margin-top:7px;line-height:1.55;}
+.inv-foot{margin-top:14px;padding-top:13px;border-top:1px solid rgba(255,255,255,.1);display:flex;gap:18px;flex-wrap:wrap;align-items:center;}
+.inv-foot .ctx{flex:1;min-width:300px;font-size:10.5px;color:rgba(255,255,255,.5);line-height:1.66;}
+.inv-foot .ctx b{color:#fff;font-weight:900;}
+.bvc-wrap{margin-top:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:16px;overflow:hidden;}
+.bvc-tabs{display:flex;background:rgba(0,0,0,.18);border-bottom:1px solid rgba(255,255,255,.1);flex-wrap:wrap;}
+.bvc-tabs button{flex:1;min-width:150px;border:none;background:transparent;padding:15px 12px;font-size:11px;font-weight:800;color:rgba(255,255,255,.48);cursor:pointer;border-bottom:3px solid transparent;transition:all .22s;}
+.bvc-tabs button.on{color:#fff;background:rgba(255,255,255,.05);border-bottom-color:var(--brand-primary);}
+.bvc-tabs button small{display:block;font-size:9px;font-weight:700;color:rgba(255,255,255,.34);margin-top:3px;}
+.bvc-tabs button.on small{color:var(--brand-primary);}
+.bvc-panel{display:none;padding:26px 28px;}
+.bvc-panel.on{display:grid;grid-template-columns:1.25fr .95fr;gap:36px;}
+.sl{margin-bottom:22px;}
+.sl .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
+.sl .top label{font-size:11.5px;font-weight:700;color:rgba(255,255,255,.72);}
+.sl .top output{font-size:14px;font-weight:900;color:var(--brand-primary);}
+.sl input[type=range]{width:100%;height:5px;border-radius:4px;background:rgba(255,255,255,.14);appearance:none;-webkit-appearance:none;outline:none;cursor:pointer;}
+.sl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;background:var(--brand-primary);border:3px solid #091220;box-shadow:0 2px 9px rgba(246,174,49,.55);cursor:pointer;}
+.sl input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--brand-primary);border:3px solid #091220;cursor:pointer;}
+.sl .src{font-size:9px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-top:7px;display:inline-block;padding:2px 8px;border-radius:20px;}
+.sl .src.sp{background:rgba(22,163,74,.14);color:#4ADE80;border:1px solid rgba(22,163,74,.32);}
+.sl .src.bm{background:rgba(255,255,255,.06);color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.14);}
+.bvc-out{background:linear-gradient(150deg,rgba(30,136,199,.18),rgba(30,136,199,.05));border:1px solid rgba(30,136,199,.34);border-radius:14px;padding:24px;display:flex;flex-direction:column;}
+.bvc-out .lab{font-size:9.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.45);}
+.bvc-out .big{font-size:2.5rem;font-weight:900;color:#fff;letter-spacing:-.035em;margin:7px 0 3px;line-height:1;}
+.bvc-out .per{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.42);}
+.bvc-out .form{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);font-size:10.5px;color:rgba(255,255,255,.55);line-height:1.7;}
+.bvc-out .form code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:var(--brand-primary);background:rgba(246,174,49,.09);padding:1px 5px;border-radius:4px;}
+.bvc-out .bench{margin-top:auto;padding-top:16px;font-size:9.5px;color:rgba(255,255,255,.38);line-height:1.62;font-style:italic;}
+.bvc-summary{background:linear-gradient(120deg,rgba(246,174,49,.12),rgba(246,174,49,.02));border-top:1.5px solid rgba(246,174,49,.35);padding:22px 28px;display:flex;align-items:center;gap:28px;flex-wrap:wrap;}
+.bvc-summary .cell .l{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.42);}
+.bvc-summary .cell .v{font-size:1.6rem;font-weight:900;color:#fff;letter-spacing:-.03em;margin-top:4px;}
+.bvc-summary .cell .v.grn{color:var(--sf-green);}
+.bvc-summary .cell .v.acc{color:var(--brand-primary);}
+.bvc-summary .sep{width:1px;height:42px;background:rgba(255,255,255,.14);}
+.bvc-summary .pills{display:flex;gap:7px;flex-wrap:wrap;flex:1;}
+.bvc-summary .pills span{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:5px 12px;font-size:9.5px;font-weight:700;color:rgba(255,255,255,.62);}
+.btn-pdf{background:var(--brand-primary);color:var(--brand-secondary);border:none;border-radius:11px;padding:14px 26px;font-size:12.5px;font-weight:900;letter-spacing:.02em;cursor:pointer;display:inline-flex;align-items:center;gap:9px;box-shadow:0 8px 26px rgba(246,174,49,.34);transition:all .22s;}
+.btn-pdf:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(246,174,49,.45);}
+.bvc-disclaimer{font-size:9.5px;color:rgba(255,255,255,.34);line-height:1.66;margin-top:14px;max-width:820px;}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 10 — PATH FORWARD
+═══════════════════════════════════════════════════════════════ */
+#s10{background:linear-gradient(170deg,#FFFFFF 0%,var(--brand-light) 45%,#E3EEFA 100%);}
+.wtt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px;}
+.wtt{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px 24px;border-top:3px solid var(--wc,var(--brand-accent));box-shadow:0 4px 18px rgba(29,34,42,.06);transition:all .26s;}
+.wtt:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(29,34,42,.13);}
+.wtt .ic{width:38px;height:38px;border-radius:10px;background:var(--wc,var(--brand-accent));display:flex;align-items:center;justify-content:center;margin-bottom:13px;}
+.wtt h4{font-size:1.02rem;font-weight:900;color:var(--ink);letter-spacing:-.02em;margin-bottom:7px;}
+.wtt p{font-size:.84rem;color:var(--muted);line-height:1.68;}
+.sec-h{font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--brand-accent);margin:46px 0 4px;}
+.sec-sub{font-size:.85rem;color:var(--muted);margin-bottom:18px;}
+/* Gantt */
+.gantt{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px 26px 20px;box-shadow:0 5px 22px rgba(29,34,42,.07);}
+.gantt-months{display:grid;grid-template-columns:190px 1fr;gap:16px;margin-bottom:11px;}
+.gantt-months .m{display:grid;grid-template-columns:repeat(4,1fr);}
+.gantt-months .m span{font-size:9.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:#94A3B8;text-align:center;padding-bottom:7px;border-bottom:1px solid var(--line);}
+.grow{display:grid;grid-template-columns:190px 1fr;gap:16px;align-items:center;margin-bottom:9px;cursor:pointer;}
+.grow .lbl{display:flex;align-items:center;gap:9px;}
+.grow .lbl b{font-size:11.5px;font-weight:800;color:var(--ink);line-height:1.25;}
+.grow .lbl i{width:7px;height:7px;border-radius:2px;background:var(--gc,var(--brand-accent));flex-shrink:0;font-style:normal;}
+.gtrack{position:relative;height:28px;background:#F6F8FB;border-radius:7px;overflow:hidden;}
+.gtrack::before,.gtrack::after{content:'';position:absolute;top:0;bottom:0;width:1px;background:#E9EEF5;}
+.gtrack::before{left:25%;} .gtrack::after{left:75%;}
+.gbar{position:absolute;top:4px;bottom:4px;border-radius:5px;background:var(--gc,var(--brand-accent));display:flex;align-items:center;padding:0 10px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+.gbar span{font-size:9px;font-weight:800;color:#fff;white-space:nowrap;letter-spacing:.02em;}
+.grow:hover .gbar{filter:brightness(1.1);transform:scaleY(1.12);}
+.grow.on .gbar{box-shadow:0 0 0 3px rgba(246,174,49,.3),0 4px 12px rgba(0,0,0,.14);}
+.grow.future .lbl b{color:#94A3B8;font-weight:700;} .grow.future{cursor:default;opacity:.85;}
+.gbar.ghost{background:transparent;border:1.5px dashed #B9C6D6;justify-content:center;}
+.gbar.ghost span{color:#94A3B8;font-weight:800;}
+.gantt-detail{margin-top:14px;background:var(--brand-light);border:1px solid rgba(30,136,199,.18);border-radius:11px;padding:0 18px;max-height:0;overflow:hidden;opacity:0;transition:all .38s cubic-bezier(.4,0,.2,1);}
+.gantt-detail.open{max-height:260px;opacity:1;padding:16px 18px;}
+.gantt-detail b{display:block;font-size:12px;font-weight:900;color:var(--ink);margin-bottom:5px;}
+.gantt-detail .dt{font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--brand-accent);margin-bottom:8px;}
+.gantt-detail p{font-size:.84rem;color:#46505A;line-height:1.7;}
+.gantt-cap{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.gantt-cap .k{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#94A3B8;}
+.gantt-cap .pay{display:flex;gap:7px;flex-wrap:wrap;}
+.gantt-cap .pay span{background:var(--brand-light);border:1px solid rgba(30,136,199,.2);border-radius:20px;padding:4px 12px;font-size:10px;font-weight:800;color:var(--brand-accent);}
+/* CTA / team */
+.cta-block{margin-top:46px;background:linear-gradient(140deg,var(--brand-secondary),#0A1525);border-radius:20px;padding:38px 42px;box-shadow:0 22px 60px rgba(29,34,42,.26);}
+.cta-block h3{font-size:clamp(1.4rem,2.6vw,2rem);font-weight:900;color:#fff;letter-spacing:-.025em;}
+.cta-block > p{font-size:.92rem;color:rgba(255,255,255,.58);line-height:1.7;max-width:640px;margin-top:10px;}
+.cta-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
+.cta-card{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.13);border-radius:15px;padding:20px;text-align:center;transition:all .26s;}
+.cta-card:hover{background:rgba(255,255,255,.09);transform:translateY(-3px);border-color:rgba(255,255,255,.24);}
+.cta-card .ph-fallback{width:72px;height:72px;border-radius:50%;margin:0 auto 13px;background:var(--brand-accent);color:#fff;font-size:24px;font-weight:900;display:flex;align-items:center;justify-content:center;border:2.5px solid rgba(255,255,255,.22);}
+.cta-card b{display:block;font-size:14px;font-weight:900;color:#fff;}
+.cta-card span{display:block;font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--brand-primary);margin-top:4px;}
+.cta-card a{display:inline-block;margin-top:12px;font-size:11px;font-weight:700;color:rgba(255,255,255,.62);text-decoration:none;word-break:break-all;}
+.cta-card a:hover{color:#fff;}
+.cta-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.13);}
+.cta-links a{display:inline-flex;align-items:center;gap:8px;border-radius:11px;padding:12px 22px;font-size:12px;font-weight:800;text-decoration:none;transition:all .22s;}
+.cta-links a.primary{background:var(--brand-primary);color:var(--brand-secondary);box-shadow:0 8px 24px rgba(246,174,49,.3);}
+.cta-links a.primary:hover{transform:translateY(-2px);}
+.cta-links a.ghost{background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.16);}
+.cta-links a.ghost:hover{background:rgba(255,255,255,.13);}
+.site-foot{text-align:center;padding:28px 20px 34px;font-size:10px;color:#94A3B8;line-height:1.7;}
+
+/* ── Shared animations ── */
+@keyframes pulseSlow{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(.85);}}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(246,174,49,.5);}70%{box-shadow:0 0 0 11px rgba(246,174,49,0);}100%{box-shadow:0 0 0 0 rgba(246,174,49,0);}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes dashFlow{to{stroke-dashoffset:-40;}}
+@keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+
+@media(max-width:1080px){
+  .slide-inner{padding:80px 30px 44px;}
+  .hero-wrap{padding:92px 30px 40px;grid-template-columns:1fr;gap:34px;}
+  .hero-visual{justify-content:flex-start;}
+  .kpi-hero{max-width:100%;}
+  .flip-grid,.wtt-grid,.leaders-grid,.inv-grid{grid-template-columns:1fr 1fr;}
+  .plat-cols,.own-grid,.demo-wrap,.ba-stage,.bvc-panel.on{grid-template-columns:1fr;}
+  .gantt-months,.grow{grid-template-columns:130px 1fr;}
+}
+@media(max-width:720px){
+  .flip-grid,.wtt-grid,.leaders-grid,.inv-grid,.cta-cards{grid-template-columns:1fr;}
+  #dotnav{display:none;}
+  .wtt-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header id="topnav">
+  <div class="tn-inner">
+    <button class="tn-lock" id="tn-home" onclick="navTo('s1')" aria-label="Back to overview">
+      <svg width="26" height="18" viewBox="0 0 273 191"><path fill="#00A1E0" d="M113.7 21.2C122.5 12 134.8 6.3 148.4 6.3c18.1 0 33.8 10.1 42.2 25.1 7.3-3.3 15.4-5.1 23.9-5.1 32.7 0 59.2 26.7 59.2 59.6s-26.5 59.6-59.2 59.6c-4 0-7.9-.4-11.7-1.2-7.4 13.2-21.5 22.1-37.7 22.1-6.8 0-13.2-1.6-18.9-4.3-7.5 17.6-24.9 29.9-45.2 29.9-21.2 0-39.2-13.4-46.1-32.2-3.1.7-6.3 1-9.6 1C20.6 160.8 0 139.9 0 114.2c0-17.2 9.3-32.2 23.1-40.3-2.8-6.5-4.4-13.7-4.4-21.3C18.7 23.6 42.4 0 71.6 0c17.1 0 32.4 8.1 42.1 20.8"/></svg>
+      <span>Salesforce</span>
+      <i class="tn-div"></i>
+      <span class="tn-sp"><b>i3 CORPS</b><em>Integration Innovation, Inc.</em></span>
+    </button>
+    <button id="tn-burger" aria-label="Toggle section menu" aria-expanded="false"><span></span></button>
+    <nav class="tn-links" id="tn-links" aria-label="Section navigation"></nav>
+  </div>
+</header>
+
+<nav id="dotnav" aria-label="Slide navigation"></nav>
+
+<!-- ══════════════════════════ SLIDE 1 — HERO ══════════════════════════ -->
+<section class="slide" id="s1" data-short="Overview" data-nav="Overview" data-theme="dark">
+  <div class="hero-wrap">
+   <div class="hero-col-l">
+    <h1 class="hero-h1">One <span class="accent">Trusted Record</span><br>for i3.</h1>
+    <p class="hero-sub">Integration Innovation serves the Army, MDA, and NASA with 700+ team members and a portfolio spanning systems engineering, AI, and cybersecurity. The next chapter of growth — more contracts, a larger workforce, faster program execution — requires a data foundation equal to the mission.</p>
+
+    <div class="stat-pills">
+      <div class="stat-pill"><div class="v">700<em>+</em></div><div class="l">Team Members</div></div>
+      <div class="stat-pill"><div class="v">3</div><div class="l">Focus Areas</div></div>
+      <div class="stat-pill"><div class="v"><em>$</em>66.8K</div><div class="l">Informatica Already Owned</div></div>
+    </div>
+
+    <div class="pain-pills">
+      <div class="pain-pill">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1E88C7" stroke-width="2.2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4M15 3h4a2 2 0 0 1 2 2v4M9 21H5a2 2 0 0 1-2-2v-4M15 21h4a2 2 0 0 0 2-2v-4"/></svg>
+        <span>Siloed Contract Data</span>
+      </div>
+      <div class="pain-pill">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1E88C7" stroke-width="2.2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Invisible Workforce</span>
+      </div>
+      <div class="pain-pill">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1E88C7" stroke-width="2.2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+        <span>Fractured Reporting</span>
+      </div>
+    </div>
+
+    <div class="hero-products">
+      <span class="lbl">Phase 1 Scope</span>
+      <div class="prod-logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" stroke-width="2.1" stroke-linecap="round"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/><path d="M4 11.5v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg><span>Informatica IDMC</span></div>
+      <div class="prod-logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E4FA3" stroke-width="2.1" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>MDM</span></div>
+      <div class="prod-logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.1" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><span>Governance</span></div>
+    </div>
+   </div>
+
+   <div class="hero-visual">
+     <div class="kpi-hero" id="kpi-hero">
+       <span class="kh-eyebrow">What Leadership Will See</span>
+       <div class="kh-body" id="kh-body">
+         <div class="kh-label" id="kh-label"></div>
+         <div class="kh-value" id="kh-value"></div>
+         <div class="kh-line" id="kh-line"></div>
+       </div>
+       <div class="kh-bar"><i id="kh-bar"></i></div>
+       <div class="kh-foot">
+         <div class="kh-dots" id="kh-dots" role="tablist" aria-label="Key metrics">
+           <button class="active" role="tab" aria-label="KPI 1"></button>
+           <button role="tab" aria-label="KPI 2"></button>
+           <button role="tab" aria-label="KPI 3"></button>
+           <button role="tab" aria-label="KPI 4"></button>
+         </div>
+         <button class="kh-link" id="kh-link" onclick="navTo('s9')">See the value calc &rarr;</button>
+       </div>
+       <p class="kh-note">Figures from Salesforce / Org62 records. BVC inputs are industry benchmarks — to be replaced with i3 actuals.</p>
+     </div>
+   </div>
+  </div>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <svg class="chev" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SLIDE 2 — THE CHALLENGE ══════════════════════════ -->
+<section class="slide tall" id="s2" data-short="Challenge" data-nav="The Challenge" data-theme="light">
+  <div class="slide-inner">
+    <div class="eyebrow on-light">The Challenge</div>
+    <h2 class="sh">Three data problems blocking all<br>three focus areas at once.</h2>
+    <p class="ss" style="color:var(--muted);">i3 already invested in Informatica Data Integration to fix a failed legacy data warehouse. These are the gaps that remain — and why a master data and governance layer is the logical next step. Hover or tap any card to see how the platform answers it.</p>
+
+    <div class="flip-grid">
+
+      <!-- 01 — Siloed Contract & Customer Data -->
+      <div class="flip" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="flip-num">01 — Contracts & Capture</div>
+            <h3>Siloed Contract &amp; Customer Data</h3>
+            <p>The same customer or contract appears differently in Deltek, the applicant tracking system, and SharePoint. There's no single record a program manager, recruiter, or BD lead can trust — so every cross-department handoff starts with reconciliation.</p>
+            <div class="pain-facts">
+              <div class="pain-fact"><b>Multiple</b><span>corporate departments with disconnected data — no single source of truth</span></div>
+              <div class="pain-fact"><b>Failed</b><span>prior third-party data warehouse attempt; Informatica self-implemented to fix it</span></div>
+            </div>
+            <div class="flip-cta">Hover &rarr;</div>
+          </div>
+          <div class="flip-face flip-back">
+            <div class="sf-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Informatica MDM
+            </div>
+            <h4>One golden record for every contract and customer.</h4>
+            <ul>
+              <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>MDM matches and merges records from Deltek, the ATS, and SharePoint into one governed master record.</span></li>
+              <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Survivorship rules decide which system's field wins — not manual judgment on every handoff.</span></li>
+              <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Deltek stays the system of record for financials. MDM sits on top of it as the trusted engagement layer.</span></li>
+            </ul>
+            <div class="resolve">Phase 1 Proposed &middot; Informatica MDM — $150K</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 — Invisible Workforce & Skills -->
+      <div class="flip" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="flip-num">02 — Workforce Readiness</div>
+            <h3>Invisible Workforce &amp; Skills</h3>
+            <p>Clearances, skills, utilization, and availability live in different systems with no common view. Staffing a new contract means calling around rather than querying a record — which slows captures, delays programs, and makes workforce planning a guessing game.</p>
+            <div class="pain-facts">
+              <div class="pain-fact"><b>700+</b><span>team members with no unified profile linking clearances, skills, and program assignments</span></div>
+              <div class="pain-fact"><b>~60%</b><span>estimated cleared-role proportion for a defense contractor of this profile</span></div>
+            </div>
+            <div class="flip-cta">Hover &rarr;</div>
+          </div>
+          <div class="flip-face flip-back">
+            <div class="sf-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>MDM + Data Quality
+            </div>
+            <h4>Every team member's full picture, in one record.</h4>
+            <ul>
+              <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Employee master records unify the ATS hire record, HR profile, clearance level, skills, and program history.</span></li>
+              <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Data Quality rules flag stale clearance expiry dates and missing skills before they impact a bid response.</span></li>
+              <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Governance applies privacy tags to sensitive fields (clearance level, SSN) so the right data reaches the right person.</span></li>
+            </ul>
+            <div class="resolve">Phase 1 Proposed &middot; MDM + Data Quality + Governance</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 — Fractured Program Reporting -->
+      <div class="flip" onclick="this.classList.toggle('flipped')">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="flip-num">03 — Program Visibility</div>
+            <h3>Fractured Program Reporting</h3>
+            <p>Program managers spend hours each week pulling together a status picture from disconnected systems. Without a unified data layer, leadership visibility into contracts, staffing, and performance requires manual assembly — which is slow, error-prone, and hard to audit.</p>
+            <div class="pain-facts">
+              <div class="pain-fact"><b>Lacking</b><span>internal data engineering expertise; Informatica was self-implemented by one engineer</span></div>
+              <div class="pain-fact"><b>No</b><span>scalable reporting layer on top of the existing Informatica investment</span></div>
+            </div>
+            <div class="flip-cta">Hover &rarr;</div>
+          </div>
+          <div class="flip-face flip-back">
+            <div class="sf-tag">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>MDM + Roadmap
+            </div>
+            <h4>Program status that builds itself.</h4>
+            <ul>
+              <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>A governed data layer means every program draws from the same contract, staffing, and performance records — not from each PM's own pull.</span></li>
+              <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Tableau and Data Cloud sit on top of the MDM layer as Phase 2 — giving leadership the dashboards they need without rebuilding the foundation.</span></li>
+              <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F6AE31" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Consistent data across programs also satisfies Infosec audit requirements without a manual evidence-gathering exercise.</span></li>
+            </ul>
+            <div class="resolve">Phase 1 Foundation &middot; Tableau + Data Cloud as Phase 2</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SLIDE 3 — WHAT YOU ALREADY OWN ══════════════════════════ -->
+<section class="slide tall" id="s3" data-short="Foundation" data-nav="What You Own" data-theme="light">
+  <div class="slide-inner">
+    <div class="eyebrow on-light">What You Already Own</div>
+    <h2 class="sh">i3 already built the foundation.<br>The next step extends it.</h2>
+    <p class="ss" style="color:var(--muted);">In January 2026, i3 invested $66,758.40 in Informatica Data Integration and self-implemented it — demonstrating real engineering capability and a genuine commitment to fixing the data problem. That investment is not being replaced. It's being built on.</p>
+
+    <div class="own-grid" style="margin-top:32px;">
+      <div>
+        <div class="own-fact">
+          <div class="tag">Closed Won · Jan 29, 2026</div>
+          <h3>Informatica IDMC — Data Integration</h3>
+          <p>i3 purchased Informatica Data Integration IPUs and self-implemented, replacing a legacy third-party data warehouse that had failed. Ron Givens led the implementation. The investment reflects real urgency around data silos and fractured reporting.</p>
+          <div class="own-metric">
+            <div><b>$66,758</b><span>Investment Made</span></div>
+            <div><b>Self</b><span>Implemented</span></div>
+            <div><b>Jan 2026</b><span>Closed Won</span></div>
+          </div>
+        </div>
+
+        <div class="own-next">
+          <div class="label">What the next step adds</div>
+          <p>Informatica MDM, Data Quality, and Governance sit directly on top of IDMC. The integration pipelines Ron built keep running — MDM adds the match-and-merge layer that turns the integrated data into one trusted record per contract, customer, and employee. No rework. No replacement. One coherent platform.</p>
+        </div>
+
+        <div style="margin-top:18px;background:rgba(30,136,199,.06);border:1px solid rgba(30,136,199,.2);border-radius:13px;padding:16px 18px;">
+          <p style="font-size:.84rem;color:var(--muted);line-height:1.68;"><b style="color:var(--ink);">Why this matters for i3:</b> Past enterprise software didn't stick at i3 — Tableau and Slack both lapsed because one person owned them. MDM is different because it serves every team that touches a contract, a person, or a program. Adoption comes from the record itself being more reliable than what each team currently has.</p>
+        </div>
+      </div>
+
+      <div class="own-visual">
+        <div class="flow-card">
+          <div class="fc-label" style="color:var(--muted);">Source Systems (Inputs)</div>
+          <div class="fc-name">Deltek + ATS + SharePoint + Other</div>
+          <div class="fc-detail">Each has its own version of the same contracts, people, and programs</div>
+        </div>
+        <div style="text-align:center;font-size:24px;color:var(--infa-orange);margin:6px 0;font-weight:900;">↓</div>
+        <div class="flow-card" style="border-left-color:var(--infa-orange);">
+          <div class="fc-label" style="color:var(--infa-orange);">Informatica IDMC</div>
+          <div class="fc-name">Data Integration — Already Running</div>
+          <div class="fc-detail">The pipelines i3 built. Integrates source data and makes it available downstream.</div>
+          <div class="fc-status live"><span style="width:6px;height:6px;border-radius:50%;background:#16A34A;display:inline-block;animation:pulseSlow 1.2s ease-in-out infinite;"></span> Live Today</div>
+        </div>
+        <div style="text-align:center;font-size:24px;color:var(--brand-primary);margin:6px 0;font-weight:900;">↓</div>
+        <div class="flow-card" style="border-left-color:var(--brand-primary);">
+          <div class="fc-label" style="color:var(--brand-primary);">MDM + Data Quality + Governance</div>
+          <div class="fc-name">One Trusted Record — Proposed</div>
+          <div class="fc-detail">Match, merge, validate, and govern: one master record per entity, with privacy controls applied.</div>
+          <div class="fc-status proposed">⚡ Proposed — $200K</div>
+        </div>
+        <div style="text-align:center;font-size:24px;color:var(--muted);margin:6px 0;font-weight:900;">↓</div>
+        <div class="flow-card" style="border-left-color:var(--muted);opacity:.7;">
+          <div class="fc-label" style="color:var(--muted);">Roadmap Activation Layer</div>
+          <div class="fc-name">Tableau · Data Cloud · Agentforce</div>
+          <div class="fc-detail">Dashboards, AI, and predictive intelligence — built on a foundation that's already trusted.</div>
+          <div class="fc-status" style="background:rgba(100,116,139,.1);color:var(--muted);border:1px dashed rgba(100,116,139,.3);">Phase 2+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SLIDE 4 — PLATFORM OVERVIEW ══════════════════════════ -->
+<section class="slide tall" id="s4" data-short="Platform" data-nav="The Platform" data-theme="dark">
+  <div class="dot-grid"></div>
+  <div class="slide-inner">
+    <div class="eyebrow on-dark">Phase 1 Platform</div>
+    <h2 class="sh on-dark">Three products on one foundation.<br>Built on the Informatica you own.</h2>
+    <p class="ss" style="color:rgba(255,255,255,.58);">Phase 1 extends the Informatica IDMC i3 already owns with three new capabilities. Roadmap items are clearly labeled — nothing is being sold speculatively. Click any card for what it does specifically for i3.</p>
+
+    <div class="plat-cols">
+      <div>
+
+        <div class="prod-card" style="--card-c:var(--mdm-blue);" onclick="openDrawer('mdm')">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div>
+            <h3>Informatica MDM</h3>
+            <p>Match and merge records from Deltek, ATS, and SharePoint into one golden record per contract, customer, and employee.</p>
+            <span class="scope">In Scope &middot; Proposed · $150K</span>
+          </div>
+          <svg class="arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+
+        <div class="prod-card" style="--card-c:var(--dq-green);" onclick="openDrawer('dq')">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg></div>
+          <div>
+            <h3>Data Quality</h3>
+            <p>Flag stale clearance data, incomplete skills profiles, and duplicate records before they reach a bid response or a program report.</p>
+            <span class="scope">In Scope &middot; Proposed</span>
+          </div>
+          <svg class="arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+
+        <div class="prod-card" style="--card-c:var(--gov-purple);" onclick="openDrawer('gov')">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div>
+            <h3>Governance &amp; Privacy</h3>
+            <p>Apply field-level privacy tags to clearance and sensitive data, enforce retention policies, and produce audit-ready lineage for Infosec vetting.</p>
+            <span class="scope">In Scope &middot; Proposed · $25K</span>
+          </div>
+          <svg class="arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+
+        <div style="background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.16);border-radius:13px;padding:15px 18px;margin-top:4px;">
+          <div style="font-size:9.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-bottom:6px;">Roadmap — Not in Phase 1 Scope</div>
+          <p style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.62;">Tableau, Data Cloud, Agentforce, and Sales Cloud for BD capture are deliberately out of scope today. They sit as labeled roadmap items throughout this site — not as anything being proposed now — and each one builds directly on the MDM layer being established in Phase 1.</p>
+        </div>
+      </div>
+
+      <div class="plat-visual">
+        <svg class="infa-hub" viewBox="0 0 260 260" role="img" aria-label="Informatica platform with MDM, Data Quality and Governance">
+          <defs>
+            <linearGradient id="hg-mdm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1665C0"/><stop offset="1" stop-color="#0E4FA3"/></linearGradient>
+            <linearGradient id="hg-dq" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1DAA5A"/><stop offset="1" stop-color="#16A34A"/></linearGradient>
+            <linearGradient id="hg-gov" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+            <radialGradient id="hg-core2" cx=".34" cy=".3" r=".9"><stop offset="0" stop-color="#FF8533"/><stop offset=".62" stop-color="#FF6B00"/><stop offset="1" stop-color="#CC5200"/></radialGradient>
+          </defs>
+          <g onclick="openDrawer('mdm')" style="cursor:pointer;">
+            <path d="M26.0 62.5A124 124 0 0 1 234.0 62.5L171.9 102.8A50 50 0 0 0 88.1 102.8Z" fill="url(#hg-mdm)"/>
+            <text x="130" y="38" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="900" font-family="Inter,system-ui,sans-serif"><tspan x="130" dy="0">MDM</tspan></text>
+          </g>
+          <g onclick="openDrawer('dq')" style="cursor:pointer;">
+            <path d="M240.5 73.7A124 124 0 0 1 136.5 253.8L132.6 179.9A50 50 0 0 0 174.6 107.3Z" fill="url(#hg-dq)"/>
+            <text x="205.3" y="168.5" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="900" font-family="Inter,system-ui,sans-serif"><tspan x="205.3" dy="0">Data</tspan><tspan x="205.3" dy="13">Quality</tspan></text>
+          </g>
+          <g onclick="openDrawer('gov')" style="cursor:pointer;">
+            <path d="M123.5 253.8A124 124 0 0 1 19.5 73.7L85.4 107.3A50 50 0 0 0 127.4 179.9Z" fill="url(#hg-gov)"/>
+            <text x="54.7" y="168.5" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="900" font-family="Inter,system-ui,sans-serif"><tspan x="54.7" dy="0">Govern-</tspan><tspan x="54.7" dy="13">ance</tspan></text>
+          </g>
+          <circle cx="130" cy="130" r="45" fill="url(#hg-core2)" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+          <text x="130" y="126" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="900" font-family="Inter,system-ui,sans-serif">Informatica</text>
+          <text x="130" y="140" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="9" font-weight="700" font-family="Inter,system-ui,sans-serif">IDMC</text>
+          <text x="130" y="154" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="7.5" font-weight="800" font-family="Inter,system-ui,sans-serif">OWNED TODAY</text>
+        </svg>
+        <p class="plat-caption"><b>Informatica is the platform core.</b> MDM, Data Quality, and Governance each extend the IDMC Ron's team already configured — not a separate purchase or a new install.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Product Drawer ── -->
+<div id="drawer-scrim" onclick="closeDrawer()"></div>
+<aside id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-name">
+  <div class="drawer-head">
+    <div class="ico" id="drawer-ico"></div>
+    <h3 id="drawer-name"></h3>
+    <p id="drawer-sub"></p>
+    <button id="drawer-close" onclick="closeDrawer()" aria-label="Close">&times;</button>
+  </div>
+  <div class="drawer-body">
+    <h5>What it does for i3</h5>
+    <div id="drawer-caps"></div>
+    <div class="growth-callout">
+      <div class="tag">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        Why it matters here
+      </div>
+      <p id="drawer-growth"></p>
+      <div class="metric" id="drawer-metrics"></div>
+    </div>
+  </div>
+</aside>
+
+<!-- ══════════════════════════ SLIDE 5 — GOLDEN RECORD DEMO ══════════════════════════ -->
+<section class="slide tall" id="s5" data-short="Demo" data-nav="Golden Record Demo" data-theme="dark">
+  <div class="dot-grid"></div>
+  <div class="slide-inner">
+    <div class="eyebrow on-dark">Golden Record Walkthrough</div>
+    <h2 class="sh on-dark">One employee. Three systems.<br>One governed master record.</h2>
+
+    <div class="demo-wrap" style="margin-top:28px;">
+      <div class="demo-context">
+        <div id="demo5-pill">Step 1 of 6</div>
+        <h2 id="demo5-title" style="font-size:clamp(1.3rem,2.4vw,1.9rem);font-weight:900;color:#fff;line-height:1.18;margin-bottom:14px;letter-spacing:-.025em;">The same person<br>appears three different ways.</h2>
+        <p id="demo5-body">Dr. Sarah Chen appears under different names, IDs, and clearance levels in Deltek, the ATS, and SharePoint. Every cross-department handoff starts with "which one is right?"</p>
+        <div id="demo5-hint"><span>👆</span><span>Tap the browser to begin</span></div>
+        <div class="demo5-dots" id="demo5-dots">
+          <div class="demo5-dot active"></div><div class="demo5-dot"></div><div class="demo5-dot"></div><div class="demo5-dot"></div><div class="demo5-dot"></div><div class="demo5-dot"></div>
+        </div>
+        <div style="margin-top:24px;padding:14px 17px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-left:2.5px solid var(--brand-primary);border-radius:12px;">
+          <p style="font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--brand-primary);margin-bottom:6px;">Demo note</p>
+          <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.68;">All names, IDs, and contract numbers are illustrative. The workflow shown is what Informatica MDM + Governance does in production — it's not a mockup of capabilities that require additional configuration beyond Phase 1 scope.</p>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px;text-align:center;">Click anywhere on the screen to advance</div>
+        <div class="browser-frame" id="bf-main">
+          <div class="bf-bar">
+            <div class="bf-dots"><i></i><i></i><i></i></div>
+            <div class="bf-url" id="bf-url">idmc.informatica.com / mdm / entity-360</div>
+          </div>
+          <div class="bf-body" id="bf-body">
+            <div class="replay-overlay" id="demo5-replay">
+              <p style="color:#fff;font-size:14px;font-weight:800;">Walkthrough complete</p>
+              <button class="replay-btn" onclick="resetDemo5()">🔁 Replay from the beginning</button>
+            </div>
+
+            <!-- Screen 1: Three conflicting records -->
+            <div class="demo5-screen ds5-active" id="ds5-1">
+              <div class="scr-head"><span class="app-name">Source Systems — Conflict View</span><span class="badge">3 Conflicts Detected</span></div>
+              <div class="scr-body">
+                <div class="scr-section">The same employee — three different records</div>
+                <div class="scr-card" style="border-left:3px solid #FF5F57;">
+                  <div class="scr-row" style="margin-bottom:6px;"><span class="scr-chip warn">Deltek ERP</span></div>
+                  <div class="scr-kv"><span>Name</span><b>S. Chen</b></div>
+                  <div class="scr-kv"><span>Employee ID</span><b>DLT-4821</b></div>
+                  <div class="scr-kv"><span>Clearance</span><b>SECRET</b></div>
+                  <div class="scr-kv"><span>Programs</span><b>2 active</b></div>
+                </div>
+                <div class="scr-card" style="border-left:3px solid #FEBC2E;">
+                  <div class="scr-row" style="margin-bottom:6px;"><span class="scr-chip amber">ATS / HR System</span></div>
+                  <div class="scr-kv"><span>Name</span><b>Sarah J. Chen, Ph.D.</b></div>
+                  <div class="scr-kv"><span>Employee ID</span><b>HR-00294</b></div>
+                  <div class="scr-kv"><span>Clearance</span><b>TS/SCI</b></div>
+                  <div class="scr-kv"><span>Programs</span><b>Not set</b></div>
+                </div>
+                <div class="scr-card" style="border-left:3px solid #94A3B8;">
+                  <div class="scr-row" style="margin-bottom:6px;"><span class="scr-chip info">SharePoint</span></div>
+                  <div class="scr-kv"><span>Name</span><b>Dr. Sarah Chen</b></div>
+                  <div class="scr-kv"><span>Employee ID</span><b>SPT-Chen-29</b></div>
+                  <div class="scr-kv"><span>Clearance</span><b>(blank)</b></div>
+                  <div class="scr-kv"><span>Programs</span><b>MDA RSOS, MSFC</b></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Screen 2: IDMC ingestion -->
+            <div class="demo5-screen" id="ds5-2">
+              <div class="scr-head"><span class="app-name">Informatica IDMC — Ingestion Pipeline</span><span class="badge">Running Now</span></div>
+              <div class="scr-body">
+                <div class="scr-section">Your existing pipelines pull from all three sources</div>
+                <div class="scr-card" style="background:#FFF7ED;border-color:rgba(255,107,0,.3);">
+                  <div style="font-size:10px;font-weight:900;color:var(--infa-orange);margin-bottom:8px;">IDMC Data Integration — Already Configured</div>
+                  <div class="scr-kv"><span>Deltek connector</span><b style="color:#16A34A;">✓ Active</b></div>
+                  <div class="scr-kv"><span>ATS/HR connector</span><b style="color:#16A34A;">✓ Active</b></div>
+                  <div class="scr-kv"><span>SharePoint connector</span><b style="color:#16A34A;">✓ Active</b></div>
+                  <div class="scr-kv"><span>Records ingested (24h)</span><b>1,842</b></div>
+                  <div class="scr-kv"><span>Conflicts detected</span><b style="color:#B45309;">247</b></div>
+                </div>
+                <div class="scr-card scr-reveal" id="ds5-2-reveal">
+                  <div style="font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--mdm-blue);margin-bottom:6px;">→ Sending to MDM match engine</div>
+                  <div style="font-size:.82rem;color:var(--muted);line-height:1.6;">All 247 conflicted entities are now queued for match-and-merge. Survivorship rules will decide which field value wins — no manual intervention required for routine conflicts.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Screen 3: MDM match + merge -->
+            <div class="demo5-screen" id="ds5-3">
+              <div class="scr-head"><span class="app-name">Informatica MDM — Match &amp; Merge</span><span class="badge" style="background:rgba(14,79,163,.2);color:#93C5FD;border-color:rgba(14,79,163,.4);">Processing</span></div>
+              <div class="scr-body">
+                <div class="scr-section">Survivorship rules applied to Dr. Sarah Chen</div>
+                <div class="scr-card">
+                  <div class="scr-row" style="margin-bottom:8px;justify-content:space-between;"><span style="font-size:11px;font-weight:800;color:#0B2545;">Match confidence</span><span class="scr-chip good">97.4%</span></div>
+                  <div class="scr-progress" style="margin-bottom:12px;"><i style="background:var(--dq-green);width:0;" id="ds5-3-bar"></i></div>
+                  <div class="scr-kv"><span>Name rule</span><b>ATS wins → "Sarah J. Chen, Ph.D."</b></div>
+                  <div class="scr-kv"><span>Employee ID</span><b>DLT-4821 (Deltek = system of record)</b></div>
+                  <div class="scr-kv"><span>Clearance rule</span><b>Highest verified → TS/SCI from ATS</b></div>
+                  <div class="scr-kv"><span>Programs</span><b>Union → MDA RSOS + MSFC + 2 Deltek</b></div>
+                </div>
+                <div class="scr-card scr-reveal" id="ds5-3-reveal" style="margin-top:8px;">
+                  <div style="font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--gov-purple);margin-bottom:4px;">→ Governance &amp; Privacy check next</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Screen 4: Data Quality + Governance -->
+            <div class="demo5-screen" id="ds5-4">
+              <div class="scr-head"><span class="app-name">Data Quality + Governance</span><span class="badge" style="background:rgba(124,58,237,.2);color:#C4B5FD;border-color:rgba(124,58,237,.4);">Governance Applied</span></div>
+              <div class="scr-body">
+                <div class="scr-section">Quality check + privacy tagging</div>
+                <div class="scr-card">
+                  <div class="scr-row" style="margin-bottom:6px;justify-content:space-between;"><span style="font-size:11px;font-weight:800;">Data Quality Score</span><span class="scr-chip good">94 / 100</span></div>
+                  <div class="scr-kv"><span>Name completeness</span><b style="color:#16A34A;">✓ Pass</b></div>
+                  <div class="scr-kv"><span>Clearance expiry</span><b style="color:#B45309;">⚠ Expires in 38 days — flagged</b></div>
+                  <div class="scr-kv"><span>Skills profile</span><b style="color:#16A34A;">✓ 12 skills recorded</b></div>
+                  <div class="scr-kv"><span>Program linkages</span><b style="color:#16A34A;">✓ 4 programs reconciled</b></div>
+                </div>
+                <div class="scr-card scr-reveal" id="ds5-4-reveal">
+                  <div style="font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--gov-purple);margin-bottom:6px;">Privacy tags applied</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:4px;">
+                    <span class="ba-tag">🔒 TS/SCI — restricted</span>
+                    <span class="ba-tag">🔒 SSN — masked</span>
+                    <span class="ba-tag">✅ Program visibility — PM only</span>
+                    <span class="ba-tag">✅ Skills — BD team visible</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Screen 5: Golden record -->
+            <div class="demo5-screen" id="ds5-5">
+              <div class="scr-head"><span class="app-name">MDM — Golden Record: Employee Master</span><span class="badge" style="background:rgba(22,163,74,.2);color:#4ADE80;border-color:rgba(22,163,74,.4);">Trusted</span></div>
+              <div class="scr-body">
+                <div class="scr-section">One governed record — available to every team</div>
+                <div class="scr-badge-success">
+                  <div style="width:36px;height:36px;border-radius:10px;background:var(--dq-green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+                  </div>
+                  <div><div style="font-size:12px;font-weight:900;color:#15803D;">Golden Record Created</div><div style="font-size:10px;color:#166534;margin-top:2px;">DLT-4821 · Sarah J. Chen, Ph.D. · Confidence 97.4%</div></div>
+                </div>
+                <div class="scr-card" style="margin-top:8px;">
+                  <div class="scr-kv"><span>Employee ID (master)</span><b>DLT-4821</b></div>
+                  <div class="scr-kv"><span>Full name</span><b>Sarah J. Chen, Ph.D.</b></div>
+                  <div class="scr-kv"><span>Clearance (verified)</span><b>TS/SCI — expires 90 days</b></div>
+                  <div class="scr-kv"><span>Active programs</span><b>MDA RSOS · MSFC · AVN-2 · PEO-MS</b></div>
+                  <div class="scr-kv"><span>Skills</span><b>12 tagged · C5ISR · Systems Eng · AI/ML</b></div>
+                  <div class="scr-kv"><span>Sources reconciled</span><b>Deltek · ATS · SharePoint</b></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Screen 6: Feeds the three focus areas -->
+            <div class="demo5-screen" id="ds5-6">
+              <div class="scr-head"><span class="app-name">Golden Record — Activation</span><span class="badge" style="background:rgba(246,174,49,.2);color:var(--brand-primary);border-color:rgba(246,174,49,.4);">Live</span></div>
+              <div class="scr-body">
+                <div class="scr-section">This record now serves all three focus areas</div>
+                <div class="scr-card" style="border-left:3px solid var(--brand-accent);">
+                  <div style="font-size:10px;font-weight:900;color:var(--brand-accent);margin-bottom:4px;">Contract Growth &amp; Capture</div>
+                  <div style="font-size:.8rem;color:var(--muted);line-height:1.6;">BD can see Dr. Chen's TS/SCI clearance, C5ISR skills, and current program load when building a bid team response — without calling HR.</div>
+                </div>
+                <div class="scr-card" style="border-left:3px solid var(--dq-green);margin-top:8px;">
+                  <div style="font-size:10px;font-weight:900;color:var(--dq-green);margin-bottom:4px;">Workforce Readiness</div>
+                  <div style="font-size:.8rem;color:var(--muted);line-height:1.6;">HR can see the clearance expiry alert 90 days out and action it before a contract requirement is missed. Utilization across 4 programs is visible in one record.</div>
+                </div>
+                <div class="scr-card" style="border-left:3px solid var(--brand-primary);margin-top:8px;">
+                  <div style="font-size:10px;font-weight:900;color:var(--brand-primary);margin-bottom:4px;">Program Visibility</div>
+                  <div style="font-size:.8rem;color:var(--muted);line-height:1.6;">Program managers see true staff-to-program linkages for all 4 of Dr. Chen's active programs — drawn from one trusted record, not from four separate system exports.</div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /bf-body -->
+        </div><!-- /browser-frame -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SLIDE 6 — BEFORE / AFTER ══════════════════════════ -->
+<section class="slide tall" id="s6" data-short="Before / After" data-nav="Before / After" data-theme="light">
+  <div class="slide-inner">
+    <div class="eyebrow on-light">Before &amp; After</div>
+    <h2 class="sh">From four versions of the truth<br>to one governed record.</h2>
+    <p class="ss" style="color:var(--muted);">Tap to see what changes across all three focus areas when MDM, Data Quality, and Governance sit on top of the Informatica layer i3 already owns.</p>
+
+    <div style="margin-top:22px;">
+      <div class="toggle-wrap">
+        <button class="on" data-state="before" onclick="setBA('before')">Before MDM</button>
+        <button data-state="after" onclick="setBA('after')">After MDM + Governance</button>
+      </div>
+    </div>
+
+    <div class="ba-stage" id="ba-stage" style="margin-top:20px;">
+      <!-- Before column -->
+      <div class="ba-col" id="ba-before">
+        <div class="ba-col-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--brand-accent)" stroke-width="2.2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4M15 3h4a2 2 0 0 1 2 2v4M9 21H5a2 2 0 0 1-2-2v-4M15 21h4a2 2 0 0 0 2-2v-4"/></svg>
+          <span class="label before-label">Today — Siloed</span>
+        </div>
+        <div class="ba-system">
+          <div class="icon" style="background:#FEF3C7;">📋</div>
+          <div><div class="name">Deltek</div><div class="detail">Contracts, financials, employee IDs</div></div>
+        </div>
+        <div class="ba-conflict">Name: "S. Chen" · Clearance: SECRET</div>
+        <div class="ba-system" style="margin-top:8px;">
+          <div class="icon" style="background:#E0F2FE;">👤</div>
+          <div><div class="name">ATS / HR</div><div class="detail">Hire records, clearances, skills</div></div>
+        </div>
+        <div class="ba-conflict">Name: "Sarah J. Chen, Ph.D." · Clearance: TS/SCI</div>
+        <div class="ba-system" style="margin-top:8px;">
+          <div class="icon" style="background:#F3E8FF;">📁</div>
+          <div><div class="name">SharePoint</div><div class="detail">Program assignments, documents</div></div>
+        </div>
+        <div class="ba-conflict">Name: "Dr. Sarah Chen" · Clearance: (blank)</div>
+
+        <div style="margin-top:14px;background:#FEF2F2;border:1px solid rgba(200,16,46,.2);border-radius:10px;padding:12px 14px;">
+          <div style="font-size:10px;font-weight:800;color:var(--i3-red);margin-bottom:4px;">Result</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:5px;">
+            <li style="font-size:.82rem;color:#7F1D1D;line-height:1.5;">• Every handoff starts with "which system is right?"</li>
+            <li style="font-size:.82rem;color:#7F1D1D;line-height:1.5;">• Clearance expiry isn't tracked in any one place</li>
+            <li style="font-size:.82rem;color:#7F1D1D;line-height:1.5;">• BD must call HR to build a bid team response</li>
+            <li style="font-size:.82rem;color:#7F1D1D;line-height:1.5;">• Program visibility requires manual exports from 3 systems</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- After column -->
+      <div class="ba-col" id="ba-after">
+        <div class="ba-col-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--dq-green)" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span class="label after-label">After MDM + Governance</span>
+        </div>
+        <div class="ba-arrow">↓</div>
+        <div class="ba-golden">
+          <div class="g-label">One Golden Record — Employee Master</div>
+          <div style="font-size:1rem;font-weight:900;color:var(--ink);margin-bottom:8px;">Sarah J. Chen, Ph.D. · DLT-4821</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+            <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px;"><div style="font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#94A3B8;">Clearance</div><div style="font-size:12px;font-weight:800;color:var(--ink);">TS/SCI</div></div>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px;"><div style="font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#94A3B8;">Programs</div><div style="font-size:12px;font-weight:800;color:var(--ink);">4 active</div></div>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px;"><div style="font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#94A3B8;">Skills</div><div style="font-size:12px;font-weight:800;color:var(--ink);">12 tagged</div></div>
+            <div style="background:#FEF3C7;border:1px solid rgba(180,83,9,.2);border-radius:8px;padding:8px 10px;"><div style="font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#B45309;">Expiry Alert</div><div style="font-size:12px;font-weight:800;color:#B45309;">38 days</div></div>
+          </div>
+          <div><span class="ba-tag">🔒 TS/SCI — restricted</span><span class="ba-tag">✅ BD team visible</span><span class="ba-tag">✅ PM visible</span></div>
+        </div>
+
+        <div style="margin-top:14px;background:#F0FDF4;border:1px solid rgba(22,163,74,.2);border-radius:10px;padding:12px 14px;">
+          <div style="font-size:10px;font-weight:800;color:var(--dq-green);margin-bottom:4px;">Result</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:5px;">
+            <li style="font-size:.82rem;color:#14532D;line-height:1.5;">• BD queries the golden record to build a bid team — no phone calls</li>
+            <li style="font-size:.82rem;color:#14532D;line-height:1.5;">• Clearance expiry flagged 90 days out, auto-alerted</li>
+            <li style="font-size:.82rem;color:#14532D;line-height:1.5;">• HR, BD, and PM see the same record — with role-appropriate access</li>
+            <li style="font-size:.82rem;color:#14532D;line-height:1.5;">• Program staffing drawn from one source, not manual exports</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SLIDE 7 — ARCHITECTURE ══════════════════════════ -->
+<section class="slide tall" id="s7" data-short="Architecture" data-nav="Architecture" data-theme="dark">
+  <div class="dot-grid"></div>
+  <div class="slide-inner">
+    <div class="eyebrow on-dark">Technical Architecture</div>
+    <h2 class="sh on-dark">Five layers. One platform.<br>Built for security and scale.</h2>
+    <p class="ss" style="color:rgba(255,255,255,.58);">Designed for a DoD contractor's Infosec vetting requirements. Click any layer to expand the detail.</p>
+
+    <div class="arch-stack">
+
+      <div class="layer" onclick="toggleLayer(this.querySelector('.layer-head'))">
+        <div class="layer-head" role="button" aria-expanded="false" tabindex="0">
+          <div class="lnum"><b>1</b><span>Source Systems</span></div>
+          <div class="lbody">
+            <span class="lchip">Deltek</span>
+            <span class="lchip">ATS</span>
+            <span class="lchip">SharePoint</span>
+            <span class="lchip tbd">+ Others</span>
+          </div>
+          <div class="layer-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="layer-more"><div class="layer-more-in"><p>Deltek is i3's ERP and system of record for contract financials and labor. The applicant tracking system holds hire, clearance, and skills data. SharePoint holds program documents and assignment records. Each system keeps running unchanged — Informatica reads from all of them. <b>Nothing about these systems changes on Phase 1 go-live.</b></p></div></div>
+      </div>
+
+      <div class="layer active-layer" onclick="toggleLayer(this.querySelector('.layer-head'))">
+        <div class="layer-head" role="button" aria-expanded="false" tabindex="0">
+          <div class="lnum"><b>2</b><span>Data Integration</span></div>
+          <div class="lbody">
+            <span class="lchip live">Informatica IDMC — Owned Today</span>
+            <span class="lchip grn">Live Pipelines</span>
+          </div>
+          <div class="layer-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="layer-more"><div class="layer-more-in"><p>The Informatica Data Integration IPUs i3 purchased in January 2026 ($66,758.40) run the extract, transform, and load pipelines that pull data from the source systems and make it available for MDM and downstream consumers. Ron Givens configured these pipelines. <b>Phase 1 does not replace or reconfigure these pipelines</b> — MDM sits on top of the data they already produce.</p></div></div>
+      </div>
+
+      <div class="layer" onclick="toggleLayer(this.querySelector('.layer-head'))">
+        <div class="layer-head" role="button" aria-expanded="false" tabindex="0">
+          <div class="lnum"><b>3</b><span>MDM + Quality</span></div>
+          <div class="lbody">
+            <span class="lchip blu">Match &amp; Merge</span>
+            <span class="lchip blu">Survivorship</span>
+            <span class="lchip blu">Quality Rules</span>
+          </div>
+          <div class="layer-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="layer-more"><div class="layer-more-in"><p>Informatica MDM receives the integrated data from Layer 2, runs a configurable match engine to identify duplicates and related entities, applies survivorship rules to decide which field value becomes the master, and writes a single trusted record to the golden record store. Data Quality rules run in parallel — flagging expired clearances, missing skills, incomplete contract fields — so the issues reach a steward rather than a downstream consumer. <b>This is the core of the $150K MDM line item.</b></p></div></div>
+      </div>
+
+      <div class="layer" onclick="toggleLayer(this.querySelector('.layer-head'))">
+        <div class="layer-head" role="button" aria-expanded="false" tabindex="0">
+          <div class="lnum"><b>4</b><span>Governance</span></div>
+          <div class="lbody">
+            <span class="lchip purple">Privacy Tags</span>
+            <span class="lchip purple">Data Lineage</span>
+            <span class="lchip purple">Policy Engine</span>
+            <span class="lchip purple">Infosec Audit</span>
+          </div>
+          <div class="layer-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="layer-more"><div class="layer-more-in"><p>Informatica Data Governance + Privacy IPUs apply field-level access policies to the golden record — so clearance data, SSNs, and other sensitive fields are masked or restricted by role. Complete data lineage records where every field came from and every transformation applied, which satisfies IT and Infosec vendor-vetting requirements (noted as a friction point in the Informatica close plan). <b>This is the $25K Governance + Privacy line item.</b> It also provides the compliance traceability needed as i3 works toward CMMC and DFARS requirements.</p></div></div>
+      </div>
+
+      <div class="layer" onclick="toggleLayer(this.querySelector('.layer-head'))">
+        <div class="layer-head" role="button" aria-expanded="false" tabindex="0">
+          <div class="lnum"><b>5</b><span>Activation</span></div>
+          <div class="lbody">
+            <span class="lchip tbd">Tableau</span>
+            <span class="lchip tbd">Data Cloud</span>
+            <span class="lchip tbd">Agentforce</span>
+            <span class="lchip tbd">Slack</span>
+          </div>
+          <div class="layer-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="layer-more"><div class="layer-more-in"><p>These are <b>roadmap items only — not in Phase 1 scope.</b> Once a trusted data layer exists, Tableau dashboards draw from it without manual pre-aggregation. Data Cloud can activate employee and contract records for real-time program management. Agentforce can apply predictive staffing and capture intelligence that i3 currently delivers for its DoD customers to i3's own operations. Slack would serve as the collaborative command center — alerting stewards, routing approvals, and surfacing insights where i3's teams already work. Each of these was suggested by the i3 leadership website, not confirmed in any discovery session.</p></div></div>
+      </div>
+
+    </div>
+
+    <div class="arch-note" style="margin-top:20px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round" flex-shrink="0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <p>i3's Infosec and vendor-onboarding requirements were cited as friction in the 2026 Informatica close. This architecture is designed to satisfy those requirements: field-level privacy controls, complete data lineage, role-based access, and a separation of concerns between integration, mastering, and governance that maps to a standard security review framework.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SLIDE 8 — BUILT FOR YOUR LEADERS ══════════════════════════ -->
+<section class="slide tall" id="s8" data-short="Leaders" data-nav="Built for Your Leaders" data-theme="light">
+  <div class="slide-inner">
+    <div class="eyebrow on-light">Built for Your Leaders</div>
+    <h2 class="sh">What each leader gets —<br>now and on the roadmap.</h2>
+    <p class="ss" style="color:var(--muted);">The data foundation serves every team that touches a contract, a person, or a program. Here is what Phase 1 delivers to each of i3's key stakeholders, and what the roadmap makes possible on top of it.</p>
+
+    <div class="leaders-grid" style="margin-top:28px;">
+
+      <!-- Betsy Ray -->
+      <div class="leader-card" style="--lc:var(--infa-orange);">
+        <div class="leader-avatar" style="background:var(--infa-orange);">BR</div>
+        <div class="leader-name">Betsy Ray</div>
+        <div class="leader-title">Director of IT</div>
+        <div class="leader-now">
+          <div class="hdr"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Phase 1 — In Scope</div>
+          <p>A governed MDM layer on top of the Informatica i3 already owns. Complete data lineage satisfies Infosec vetting. Field-level privacy controls for clearance data. The data quality rules Ron configured are now enforced automatically — not manually verified on each export.</p>
+        </div>
+        <div class="leader-road">
+          <div class="hdr"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Roadmap</div>
+          <p>A platform that has earned its Infosec approval once — and never has to go through vendor vetting again for each new capability. Tableau and Data Cloud activate on the same governed layer.</p>
+        </div>
+      </div>
+
+      <!-- Josh Kalin -->
+      <div class="leader-card" style="--lc:var(--gov-purple);">
+        <div class="leader-avatar" style="background:var(--gov-purple);">JK</div>
+        <div class="leader-name">Josh Kalin</div>
+        <div class="leader-title">Director of Artificial Intelligence</div>
+        <div class="leader-now">
+          <div class="hdr"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Phase 1 — In Scope</div>
+          <p>A trusted, governed data foundation — which is the prerequisite for any AI model trained or operated on i3's own enterprise data. Every AI output is only as reliable as the data it's trained on. MDM provides the clean, validated input.</p>
+        </div>
+        <div class="leader-road">
+          <div class="hdr"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Roadmap</div>
+          <p>Agentforce and Einstein Prediction Builder can apply the same AI workflows i3 delivers for the warfighter — predictive staffing, program risk scoring, capture intelligence — to i3's own internal operations. Built on the Phase 1 data layer.</p>
+        </div>
+      </div>
+
+      <!-- Tyler Stutheit / Platform Architect -->
+      <div class="leader-card" style="--lc:var(--mdm-blue);">
+        <div class="leader-avatar" style="background:var(--mdm-blue);">TS</div>
+        <div class="leader-name">Tyler Stutheit</div>
+        <div class="leader-title">Cloud Architect</div>
+        <div class="leader-now">
+          <div class="hdr"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Phase 1 — In Scope</div>
+          <p>The architecture in Slide 7 — source systems untouched, IDMC pipelines extended not replaced, MDM and Governance as a layer above. Separation of concerns between integration, mastering, and governance maps directly to a DoD-grade security review framework.</p>
+        </div>
+        <div class="leader-road">
+          <div class="hdr"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Roadmap</div>
+          <p>Data Cloud provides a real-time activation layer on top of the Informatica master records — multi-cloud compatible, with connectors to every system in the current stack and to future systems as i3 grows through program wins and potential acquisition.</p>
+        </div>
+      </div>
+
+      <!-- Matt Zepp / CJ Jacobs -->
+      <div class="leader-card" style="--lc:var(--brand-primary);">
+        <div class="leader-avatar" style="background:var(--brand-primary);color:var(--brand-secondary);">MZ</div>
+        <div class="leader-name">Matt Zepp <span style="font-size:.75em;font-weight:600;color:var(--muted);">/ Leadership</span></div>
+        <div class="leader-title">Director of Business Strategy</div>
+        <div class="leader-now">
+          <div class="hdr"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Phase 1 — In Scope</div>
+          <p>A data foundation that supports all three focus areas — Contract Growth, Workforce Readiness, and Program Visibility — from one investment. The BVC on the next slide shows the value model for each. Every number is a benchmark today; discovery replaces them with i3 actuals.</p>
+        </div>
+        <div class="leader-road">
+          <div class="hdr"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Roadmap</div>
+          <p>When the data is trusted, the growth strategy has evidence. Capture teams can see exactly which skills, clearances, and program experience are on hand when they write a bid. Business strategy decisions rest on a single version of the truth.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SLIDE 9 — BUSINESS VALUE CALCULATOR ══════════════════════════ -->
+<section class="slide tall" id="s9" data-short="Value Calc" data-nav="⚡ Value Calc" data-theme="dark">
+  <div class="dot-grid"></div>
+  <div class="slide-inner">
+    <div class="eyebrow on-dark">Business Value Calculator</div>
+    <h2 class="sh on-dark">What the data foundation<br>is worth to i3.</h2>
+
+    <!-- Investment snapshot -->
+    <div class="inv-strip">
+      <div class="inv-hd" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+        <b style="font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-primary);">Investment Snapshot</b>
+        <span style="font-size:10.5px;color:rgba(255,255,255,.45);">What i3 has committed and what's proposed</span>
+      </div>
+      <div class="inv-grid">
+        <div class="inv-cell hero">
+          <div class="v">$200K</div>
+          <div class="l">MDM + Data Quality + Governance — Proposed</div>
+          <div class="n">MDM $150K · Data Integration IPU $25K · Governance IPU $25K</div>
+        </div>
+        <div class="inv-cell">
+          <div class="v">$66.8K</div>
+          <div class="l">Informatica IDMC — Closed Won Jan 2026</div>
+          <div class="n">Data Integration IPUs already running in production</div>
+        </div>
+        <div class="inv-cell">
+          <div class="v">$266.8K</div>
+          <div class="l">Total Platform Investment</div>
+          <div class="n">Full Informatica + MDM + Governance stack</div>
+        </div>
+        <div class="inv-cell">
+          <div class="v" id="bvc-payback">—</div>
+          <div class="l">Estimated Payback Period</div>
+          <div class="n">Based on benchmark inputs below — update with i3 actuals</div>
+        </div>
+      </div>
+      <div class="inv-foot">
+        <div class="ctx">Partner: <b>To be confirmed</b> &middot; Close target: <b>Feb 12, 2027</b> &middot; Stage: <b>02 Best Case</b> &middot; All BVC inputs are industry benchmarks unless noted — replace with i3 actuals during discovery</div>
+      </div>
+    </div>
+
+    <!-- BVC tabs -->
+    <div class="bvc-wrap">
+      <div class="bvc-tabs">
+        <button class="on" onclick="setBvcTab(0,this)">Contract Growth &amp; Capture<small id="tt-0">—</small></button>
+        <button onclick="setBvcTab(1,this)">Workforce Readiness<small id="tt-1">—</small></button>
+        <button onclick="setBvcTab(2,this)">Program Visibility<small id="tt-2">—</small></button>
+        <button onclick="setBvcTab(3,this)">Data Foundation<small id="tt-3">—</small></button>
+      </div>
+
+      <!-- Tab 0: Contract Growth & Capture -->
+      <div class="bvc-panel on">
+        <div>
+          <div class="sl">
+            <div class="top"><label>Bids / proposals per year</label><output id="o-bids"></output></div>
+            <input type="range" id="i-bids" min="10" max="200" step="5" value="50" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Hours saved per proposal (clean data)</label><output id="o-bid-hrs"></output></div>
+            <input type="range" id="i-bid-hrs" min="2" max="40" step="1" value="12" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Avg BD / capture hourly rate ($)</label><output id="o-bid-rate"></output></div>
+            <input type="range" id="i-bid-rate" min="50" max="200" step="5" value="95" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Win-rate lift (% points, with trusted data)</label><output id="o-win-lift"></output></div>
+            <input type="range" id="i-win-lift" min="0" max="15" step="0.5" value="3" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Avg contract value ($M)</label><output id="o-acv"></output></div>
+            <input type="range" id="i-acv" min="0.5" max="20" step="0.25" value="2.0" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark — confirm with JJ</div>
+          </div>
+        </div>
+        <div>
+          <div class="bvc-out">
+            <div class="lab">Annual Value — Capture Efficiency</div>
+            <div class="big" id="v-0a">—</div>
+            <div class="per">hours saved × BD rate</div>
+            <div class="form">
+              <code id="f-0a">bids × hrs-saved × rate</code>
+            </div>
+            <div class="lab" style="margin-top:16px;">Annual Value — Win Rate Lift</div>
+            <div class="big" id="v-0b">—</div>
+            <div class="per">additional contract revenue</div>
+            <div class="form">
+              <code id="f-0b">bids × lift% × ACV</code>
+            </div>
+            <div class="bench">Benchmark: GovCon firms with clean BD/capture data report 3–7% win-rate improvement. Source: Deltek GovCon 2025 Survey.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 1: Workforce Readiness -->
+      <div class="bvc-panel">
+        <div>
+          <div class="sl">
+            <div class="top"><label>Annual cleared-role hires</label><output id="o-hires"></output></div>
+            <input type="range" id="i-hires" min="5" max="200" step="5" value="50" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Days-to-fill reduction (with skills visibility)</label><output id="o-ttf"></output></div>
+            <input type="range" id="i-ttf" min="0" max="60" step="1" value="20" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Daily loaded cost of unfilled cleared role ($)</label><output id="o-daily"></output></div>
+            <input type="range" id="i-daily" min="200" max="2000" step="50" value="800" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Billable employees</label><output id="o-bill-emp"></output></div>
+            <input type="range" id="i-bill-emp" min="100" max="1000" step="25" value="400" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark — i3 ~395–700 confirmed</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Utilization improvement (% points)</label><output id="o-util"></output></div>
+            <input type="range" id="i-util" min="0" max="10" step="0.5" value="3" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+        </div>
+        <div>
+          <div class="bvc-out">
+            <div class="lab">Annual Value — Time-to-Fill</div>
+            <div class="big" id="v-1a">—</div>
+            <div class="per">cleared-hire backfill cost saved</div>
+            <div class="form"><code id="f-1a">hires × days-saved × daily-rate</code></div>
+            <div class="lab" style="margin-top:16px;">Annual Value — Utilization</div>
+            <div class="big" id="v-1b">—</div>
+            <div class="per">additional billable revenue</div>
+            <div class="form"><code id="f-1b">employees × util-lift × $350/day × 250 days</code></div>
+            <div class="bench">Benchmark: cleared-role time-to-fill averages 120+ days. Workforce visibility tools reduce this by 15–30 days. Source: SHRM GovCon Talent Report 2025.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Program Visibility -->
+      <div class="bvc-panel">
+        <div>
+          <div class="sl">
+            <div class="top"><label>Active programs / contracts</label><output id="o-progs"></output></div>
+            <input type="range" id="i-progs" min="5" max="100" step="5" value="40" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark — confirm with JJ</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Program managers</label><output id="o-pms"></output></div>
+            <input type="range" id="i-pms" min="5" max="80" step="1" value="30" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Manual reporting hours / PM / week</label><output id="o-rpt-hrs"></output></div>
+            <input type="range" id="i-rpt-hrs" min="1" max="20" step="0.5" value="5" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Reporting reduction with governed data</label><output id="o-rpt-red"></output></div>
+            <input type="range" id="i-rpt-red" min="10" max="80" step="5" value="50" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>PM hourly loaded rate ($)</label><output id="o-pm-rate"></output></div>
+            <input type="range" id="i-pm-rate" min="50" max="200" step="5" value="95" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+        </div>
+        <div>
+          <div class="bvc-out">
+            <div class="lab">Annual Value — Reporting Efficiency</div>
+            <div class="big" id="v-2">—</div>
+            <div class="per">PM hours recaptured per year</div>
+            <div class="form"><code id="f-2">PMs × hrs/wk × 52 × reduction% × rate</code></div>
+            <div class="bench">Benchmark: Program managers at mid-size defense contractors spend 4–8 hours/week on manual data aggregation. Unified data platforms reduce this by 40–60%. Source: PRTM / Booz Allen GovCon PM Survey.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Data Foundation -->
+      <div class="bvc-panel">
+        <div>
+          <div class="sl">
+            <div class="top"><label>Source systems feeding Informatica</label><output id="o-srcs"></output></div>
+            <input type="range" id="i-srcs" min="2" max="12" step="1" value="4" oninput="calcBvc()"/>
+            <div class="src bm">estimate — Deltek, ATS, SharePoint, other</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Weekly reconciliation hours (data team)</label><output id="o-recon"></output></div>
+            <input type="range" id="i-recon" min="5" max="60" step="1" value="20" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Data engineer / BI hourly rate ($)</label><output id="o-de-rate"></output></div>
+            <input type="range" id="i-de-rate" min="50" max="200" step="5" value="90" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Reconciliation reduction with MDM</label><output id="o-recon-red"></output></div>
+            <input type="range" id="i-recon-red" min="20" max="80" step="5" value="60" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+          <div class="sl">
+            <div class="top"><label>Managed entity records (contracts, people)</label><output id="o-recs"></output></div>
+            <input type="range" id="i-recs" min="1000" max="50000" step="1000" value="10000" oninput="calcBvc()"/>
+            <div class="src bm">industry benchmark</div>
+          </div>
+        </div>
+        <div>
+          <div class="bvc-out">
+            <div class="lab">Annual Value — Reconciliation Savings</div>
+            <div class="big" id="v-3a">—</div>
+            <div class="per">data engineering hours recaptured</div>
+            <div class="form"><code id="f-3a">hrs/wk × 52 × reduction% × rate</code></div>
+            <div class="lab" style="margin-top:16px;">Annual Value — Data Quality Risk</div>
+            <div class="big" id="v-3b">—</div>
+            <div class="per">duplicate / bad record cost avoided</div>
+            <div class="form"><code id="f-3b">records × 12% duplicate rate × $50 / record</code></div>
+            <div class="bench">Benchmark: Data teams at GovCon firms spend 15–30 hrs/week reconciling siloed systems. MDM reduces this by 50–70%. Source: Informatica 2025 Data Management Report.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bvc-summary">
+        <div class="cell"><div class="l">Total Identified Annual Value</div><div class="v grn" id="bvc-total">—</div></div>
+        <div class="sep"></div>
+        <div class="cell"><div class="l">Proposed Investment</div><div class="v">$200K</div></div>
+        <div class="sep"></div>
+        <div class="pills" id="bvc-pills"></div>
+      </div>
+
+      <div style="padding:18px 28px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.07);">
+        <button class="btn-pdf" onclick="generateBvcPDF()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Export Business Case PDF
+        </button>
+        <p class="bvc-disclaimer">All inputs are industry benchmarks until replaced with i3 actuals during discovery. Values are directional estimates for executive discussion, not a guarantee of results. The $200K investment covers Informatica licensing; implementation services are priced separately through the implementation partner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SLIDE 10 — PATH FORWARD ══════════════════════════ -->
+<section class="slide tall" id="s10" data-short="Path Forward" data-nav="Path Forward" data-theme="light">
+  <div class="slide-inner">
+    <div class="eyebrow on-light">Path Forward</div>
+    <h2 class="sh">What the next 90 days look like.</h2>
+    <p class="ss" style="color:var(--muted);">Three outcomes that move all three focus areas forward — before a single line of new code is written.</p>
+
+    <div class="wtt-grid">
+      <div class="wtt" style="--wc:var(--infa-orange);">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h4>On-site MDM Design Session</h4>
+        <p>A half-day with Betsy, Ron, and Zak to map i3's entity types (contract, customer, employee, program), define survivorship rules, and agree on the scope for Phase 1 MDM configuration. This session replaces every discovery assumption in the BVC with real i3 numbers.</p>
+      </div>
+      <div class="wtt" style="--wc:var(--dq-green);">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/><path d="M4 11.5v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></div>
+        <h4>Informatica Health Review</h4>
+        <p>A structured review of the IDMC implementation Ron built — what's working, what the IPU consumption rate implies about scale, and whether the current configuration is the right foundation for MDM and Governance to build on. Ravi Rangas leads alongside Ron.</p>
+      </div>
+      <div class="wtt" style="--wc:var(--gov-purple);">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg></div>
+        <h4>Infosec &amp; Governance Scoping</h4>
+        <p>A conversation with IT, the Information Assurance Manager, and the ISSO to document i3's specific compliance requirements — CMMC level, CUI handling, field-level access policy needs — so the Governance + Privacy IPU configuration is right-sized from day one.</p>
+      </div>
+    </div>
+
+    <div class="sec-h">Implementation Roadmap — Proposed Timeline</div>
+    <div class="sec-sub">Target close Feb 12, 2027 · Click any row for detail</div>
+
+    <div class="gantt">
+      <div class="gantt-months">
+        <div></div>
+        <div class="m">
+          <span>Nov 2026</span>
+          <span>Dec 2026</span>
+          <span>Jan 2027</span>
+          <span>Feb 2027</span>
+        </div>
+      </div>
+      <div class="grow" onclick="setGantt(0,this)" style="--gc:var(--infa-orange);">
+        <div class="lbl"><i></i><b>Discovery &amp; Design</b></div>
+        <div class="gtrack"><div class="gbar" style="left:0;width:22%;"><span>Entity modeling</span></div></div>
+      </div>
+      <div class="grow" onclick="setGantt(1,this)" style="--gc:var(--mdm-blue);">
+        <div class="lbl"><i></i><b>MDM Configuration</b></div>
+        <div class="gtrack"><div class="gbar" style="left:15%;width:45%;"><span>Match, merge, survivorship</span></div></div>
+      </div>
+      <div class="grow" onclick="setGantt(2,this)" style="--gc:var(--dq-green);">
+        <div class="lbl"><i></i><b>Data Quality Rules</b></div>
+        <div class="gtrack"><div class="gbar" style="left:20%;width:40%;"><span>Quality + alert config</span></div></div>
+      </div>
+      <div class="grow" onclick="setGantt(3,this)" style="--gc:var(--gov-purple);">
+        <div class="lbl"><i></i><b>Governance &amp; Privacy</b></div>
+        <div class="gtrack"><div class="gbar" style="left:30%;width:38%;"><span>Field policies + lineage</span></div></div>
+      </div>
+      <div class="grow" onclick="setGantt(4,this)" style="--gc:var(--brand-accent);">
+        <div class="lbl"><i></i><b>UAT &amp; Infosec Review</b></div>
+        <div class="gtrack"><div class="gbar" style="left:62%;width:24%;"><span>UAT + vetting</span></div></div>
+      </div>
+      <div class="grow future" style="--gc:var(--brand-primary);">
+        <div class="lbl"><i></i><b>Go-Live — Feb 12, 2027</b></div>
+        <div class="gtrack"><div class="gbar ghost" style="left:84%;width:16%;"><span>Target</span></div></div>
+      </div>
+      <div class="gantt-detail" id="gantt-detail"></div>
+      <div class="gantt-cap">
+        <span class="k">Implementation Partner</span>
+        <div class="pay"><span>To Be Confirmed</span><span>Contact JJ Jackson</span></div>
+      </div>
+    </div>
+
+    <!-- Account team CTA -->
+    <div class="cta-block">
+      <h3>Ready to replace the benchmarks<br>with i3 actuals?</h3>
+      <p>The next step is a 30-minute conversation with JJ, Ravi, and the Informatica team to scope the MDM design session and confirm the Infosec requirements. Everything in the business case above updates the moment we have i3's real numbers.</p>
+      <div class="cta-cards">
+        <div class="cta-card">
+          <div class="ph-fallback">JJ</div>
+          <b>JJ Jackson</b>
+          <span>Account Executive</span>
+          <a href="mailto:jj.jackson@salesforce.com">jj.jackson@salesforce.com</a>
+        </div>
+        <div class="cta-card">
+          <div class="ph-fallback" style="background:var(--brand-accent);">ED</div>
+          <b>Eric Dalton</b>
+          <span>Solutions Engineer</span>
+          <a href="mailto:edalton@salesforce.com">edalton@salesforce.com</a>
+        </div>
+        <div class="cta-card">
+          <div class="ph-fallback" style="background:var(--brand-primary);color:var(--brand-secondary);">GS</div>
+          <b>Grant Stephens</b>
+          <span>Regional VP</span>
+          <a href="mailto:grant.stephens@salesforce.com">grant.stephens@salesforce.com</a>
+        </div>
+      </div>
+      <div class="cta-links">
+        <a href="team.html" class="primary" target="_blank">Schedule a Review →</a>
+        <a href="exec-summary.html" class="ghost" target="_blank">Executive Summary</a>
+        <a href="bva.html" class="ghost" target="_blank">Full Business Case</a>
+      </div>
+    </div>
+
+    <div class="site-foot">
+      Prepared by the Salesforce account team for Integration Innovation, Inc. (i3) · October 2026 · Confidential<br>
+      <meta name="robots" content="noindex, nofollow"> Not for distribution.
+    </div>
+  </div>
+</section>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION — progress bar, dot nav, top nav scroll spy
+═══════════════════════════════════════════════════════════════ */
+const slides = Array.from(document.querySelectorAll('.slide[id]'));
+const prog = document.getElementById('progress');
+const dotnav = document.getElementById('dotnav');
+const tnLinks = document.getElementById('tn-links');
+
+slides.forEach((sl, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'dot' + (sl.dataset.theme === 'light' ? ' light' : '');
+  dot.setAttribute('aria-label', sl.dataset.nav || sl.id);
+  dot.innerHTML = '<span class="tip">' + (sl.dataset.nav || sl.id) + '</span>';
+  dot.addEventListener('click', () => navTo(sl.id));
+  dotnav.appendChild(dot);
+
+  const link = document.createElement('button');
+  link.className = 'tn-link';
+  link.textContent = sl.dataset.nav || sl.id;
+  if (sl.id === 's9') link.id = 'tn-bvc';
+  link.addEventListener('click', () => { navTo(sl.id); closeBurger(); });
+  tnLinks.appendChild(link);
+});
+
+function navTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+const dots = Array.from(dotnav.querySelectorAll('.dot'));
+const links = Array.from(tnLinks.querySelectorAll('.tn-link'));
+
+function updateNav() {
+  const wh = window.innerHeight;
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - wh;
+  prog.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+  let active = 0;
+  slides.forEach((sl, i) => {
+    const rect = sl.getBoundingClientRect();
+    if (rect.top <= wh * 0.45) active = i;
+  });
+  dots.forEach((d, i) => d.classList.toggle('on', i === active));
+  links.forEach((l, i) => l.classList.toggle('on', i === active));
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+
+document.getElementById('tn-burger').addEventListener('click', function () {
+  const open = !tnLinks.classList.contains('open');
+  tnLinks.classList.toggle('open', open);
+  this.classList.toggle('open', open);
+  this.setAttribute('aria-expanded', String(open));
+});
+function closeBurger() {
+  tnLinks.classList.remove('open');
+  document.getElementById('tn-burger').classList.remove('open');
+  document.getElementById('tn-burger').setAttribute('aria-expanded', 'false');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO KPI ROTATOR
+═══════════════════════════════════════════════════════════════ */
+const KPI_DATA = [
+  { label: 'Team Members', value: '700+', line: '<b>Integration Innovation, Inc.</b> — Huntsville, AL · Founded 2007 · Serving Army, MDA, NASA MSFC' },
+  { label: 'Salesforce Focus Areas', value: '3', line: '<b>Contract Growth & Capture</b> · <b>Workforce Readiness</b> · <b>Program Visibility</b>' },
+  { label: 'Informatica Already Owned', value: '$66.8K', line: 'Closed Jan 29, 2026 · Self-implemented by Ron Givens · Replacing a failed data warehouse' },
+  { label: 'MDM Expansion — Proposed', value: '$200K', line: '<b>MDM $150K</b> · Data Integration IPU $25K · Governance + Privacy IPU $25K · Close target Feb 2027' }
+];
+let kpiIdx = 0, kpiTimer = null, kpiPaused = false;
+
+function showKpi(n) {
+  const body = document.getElementById('kh-body');
+  body.classList.add('swap');
+  setTimeout(() => {
+    document.getElementById('kh-label').textContent = KPI_DATA[n].label;
+    document.getElementById('kh-value').textContent = KPI_DATA[n].value;
+    document.getElementById('kh-line').innerHTML = KPI_DATA[n].line;
+    body.classList.remove('swap');
+    const bar = document.getElementById('kh-bar');
+    bar.style.width = '0';
+    setTimeout(() => { bar.style.transition = 'width 3.8s linear'; bar.style.width = '100%'; }, 80);
+  }, 200);
+  document.querySelectorAll('#kh-dots button').forEach((b, i) => b.classList.toggle('active', i === n));
+}
+
+function nextKpi() {
+  kpiIdx = (kpiIdx + 1) % KPI_DATA.length;
+  showKpi(kpiIdx);
+}
+
+function startKpiTimer() {
+  clearInterval(kpiTimer);
+  kpiTimer = setInterval(nextKpi, 4200);
+}
+
+document.querySelectorAll('#kh-dots button').forEach((btn, i) => {
+  btn.addEventListener('click', () => { kpiIdx = i; showKpi(i); if (!kpiPaused) startKpiTimer(); });
+});
+document.getElementById('kpi-hero').addEventListener('mouseenter', () => {
+  clearInterval(kpiTimer); kpiPaused = true;
+  document.getElementById('kpi-hero').classList.add('stopped');
+});
+document.getElementById('kpi-hero').addEventListener('mouseleave', () => {
+  kpiPaused = false;
+  document.getElementById('kpi-hero').classList.remove('stopped');
+  document.getElementById('kh-bar').style.transition = '';
+  startKpiTimer();
+});
+
+showKpi(0);
+startKpiTimer();
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 4 — DRAWER
+═══════════════════════════════════════════════════════════════ */
+const DRAWER_DATA = {
+  mdm: {
+    color: '#0E4FA3',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+    name: 'Informatica MDM',
+    sub: 'The match-and-merge layer that turns integrated data into one trusted record per contract, customer, and employee.',
+    caps: [
+      ['Match & merge across sources', 'MDM identifies that "S. Chen" in Deltek, "Sarah J. Chen, Ph.D." in the ATS, and "Dr. Sarah Chen" in SharePoint are the same person — then creates one record with survivorship rules deciding which field wins.'],
+      ['Survivorship rules you define', 'Betsy\'s team defines which system wins for which field. Deltek wins for employee ID; the ATS wins for clearance level; SharePoint wins for program assignments. The rules run automatically on every ingestion cycle.'],
+      ['Entity types for all three focus areas', 'Contracts, customers, employees, and programs are all entity types MDM can master. Phase 1 scopes the entities that matter most for i3\'s current pain points.']
+    ],
+    growth: 'i3 self-implemented Informatica after a third-party data warehouse failed. That shows real capability and real urgency. MDM is the layer that makes Ron\'s integration work produce a single trusted answer — rather than multiple conflicting versions of one.',
+    metrics: [['$150K', 'MDM Line Item'], ['3+', 'Entity Types in Scope']]
+  },
+  dq: {
+    color: '#16A34A',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg>',
+    name: 'Informatica Data Quality',
+    sub: 'Rules-based validation that flags bad data before it reaches a bid response, a program report, or a compliance audit.',
+    caps: [
+      ['Clearance expiry alerts', 'A rule that checks clearance expiry dates and flags anyone within 90 days — so HR can action it before a contract requirement is missed. Today that alert doesn\'t exist in any system.'],
+      ['Skills completeness scoring', 'Each employee record is scored on skills-profile completeness. BD teams can filter to only fully-profiled employees when building a bid team response — which removes the manual HR call.'],
+      ['Duplicate detection', 'Quality rules catch duplicate contract or customer records before they enter the golden record store — preventing the kind of split-record problem that makes program visibility hard today.']
+    ],
+    growth: 'i3 cited "lack of internal data engineering expertise" as a driver for the Informatica purchase. Data Quality rules are the automated replacement for the manual data-checking that currently falls on Ron and Zak. Every rule that runs automatically is an hour their team doesn\'t spend on verification.',
+    metrics: [['Automated', 'Rule Enforcement'], ['90-day', 'Clearance Alert Window']]
+  },
+  gov: {
+    color: '#7C3AED',
+    icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
+    name: 'Governance + Privacy',
+    sub: 'Field-level access controls, complete data lineage, and policy enforcement — designed to satisfy DoD-contractor Infosec vetting.',
+    caps: [
+      ['Field-level privacy tags', 'TS/SCI clearance levels, SSNs, and other sensitive fields are tagged and masked by role. BD teams see the clearance level exists; they don\'t see the raw value unless they\'re cleared to.'],
+      ['Complete data lineage', 'Every field in the golden record has a traceable history — where it came from, when it changed, and what rule decided its current value. This is what satisfies the Infosec vetting process that was cited as friction in the Informatica close.'],
+      ['Policy engine for retention and access', 'Retention policies, access controls, and purpose-limitation policies run on the same platform — supporting DFARS, NIST 800-171, and eventual CMMC compliance as i3\'s requirements evolve.']
+    ],
+    growth: 'Infosec and vendor onboarding friction was specifically noted in the Informatica deal\'s compelling event field. Governance + Privacy is designed to satisfy that vetting once — and make every future capability addition faster because the governance framework is already in place.',
+    metrics: [['$25K', 'Governance + Privacy IPU'], ['Field-level', 'Privacy Controls']]
+  }
+};
+
+function openDrawer(key) {
+  const d = DRAWER_DATA[key]; if (!d) return;
+  const dr = document.getElementById('drawer');
+  document.getElementById('drawer-ico').style.background = d.color;
+  document.getElementById('drawer-ico').innerHTML = d.icon;
+  document.getElementById('drawer-name').textContent = d.name;
+  document.getElementById('drawer-sub').textContent = d.sub;
+  document.getElementById('drawer-caps').innerHTML = d.caps.map(c =>
+    '<div class="cap"><div class="bullet"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="' + d.color + '" stroke-width="3.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div><div><b>' + c[0] + '</b><p>' + c[1] + '</p></div></div>'
+  ).join('');
+  document.getElementById('drawer-growth').textContent = d.growth;
+  document.getElementById('drawer-metrics').innerHTML = d.metrics.map(m =>
+    '<div><b>' + m[0] + '</b><span>' + m[1] + '</span></div>'
+  ).join('');
+  dr.classList.add('open');
+  document.getElementById('drawer-scrim').classList.add('open');
+}
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-scrim').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 5 — GOLDEN RECORD DEMO (browser frame, 6 screens)
+═══════════════════════════════════════════════════════════════ */
+const DEMO5_CONTEXT = [
+  { pill: 'Step 1 of 6', title: 'The same person<br>appears three different ways.', body: 'Dr. Sarah Chen exists as three conflicting records across Deltek, the ATS, and SharePoint — different name formats, different clearance levels, different program assignments. Which one is right?', hint: '👆 Tap the browser to begin' },
+  { pill: 'Step 2 of 6', title: 'Informatica IDMC ingests<br>from all three sources.', body: 'The pipelines Ron built pull data from every source system on each cycle. 247 conflict records were flagged in the last 24 hours — all queued for MDM to resolve.', hint: '👆 Tap to see the match engine' },
+  { pill: 'Step 3 of 6', title: 'MDM matches and merges<br>with survivorship rules.', body: '97.4% confidence match. The rules Betsy\'s team defined decide: ATS wins the name and clearance (highest verified), Deltek wins the employee ID (system of record). Programs are unified across all three sources.', hint: '👆 Tap to see the quality check' },
+  { pill: 'Step 4 of 6', title: 'Data Quality + Governance<br>validates and tags the record.', body: 'Quality score: 94/100. The clearance expiry is flagged 38 days out. Privacy tags are applied — TS/SCI is restricted, the skills profile is visible to the BD team, program assignments go to the PM.', hint: '👆 Tap to see the golden record' },
+  { pill: 'Step 5 of 6', title: 'One governed record<br>replaces three conflicting ones.', body: 'Sarah J. Chen, Ph.D. · DLT-4821 · TS/SCI · 4 active programs · 12 skills tagged. Confidence: 97.4%. Sources reconciled: Deltek + ATS + SharePoint. Available to every authorized team.', hint: '👆 Tap to see the activation' },
+  { pill: 'Step 6 of 6', title: 'The same record serves<br>all three focus areas.', body: 'BD queries it to build bid teams. HR sees the clearance expiry alert. PMs see true staff-to-program linkages. One record — role-appropriate access for each team.', hint: '🔁 Tap to replay' }
+];
+
+const BF_URLS = [
+  'idmc.informatica.com / conflict-view / employee-entity',
+  'idmc.informatica.com / pipelines / ingestion-monitor',
+  'idmc.informatica.com / mdm / match-merge / entity-4821',
+  'idmc.informatica.com / data-quality / governance / entity-4821',
+  'idmc.informatica.com / mdm / golden-record / DLT-4821',
+  'idmc.informatica.com / entity-360 / DLT-4821 / activation'
+];
+
+let demo5State = 0;
+const demo5Screens = Array.from(document.querySelectorAll('.demo5-screen'));
+const demo5Dots = Array.from(document.querySelectorAll('.demo5-dot'));
+const demo5Timers = [];
+
+function demo5ClearTimers() { demo5Timers.forEach(t => clearTimeout(t)); demo5Timers.length = 0; }
+function demo5Later(fn, ms) { demo5Timers.push(setTimeout(fn, ms)); }
+
+const demo5Hooks = {
+  1: () => { // Ingestion — show reveal card
+    demo5Later(() => {
+      const el = document.getElementById('ds5-2-reveal');
+      if (el) el.classList.add('in');
+    }, 900);
+  },
+  2: () => { // Match engine — animate progress bar + reveal
+    const bar = document.getElementById('ds5-3-bar');
+    if (bar) { bar.style.width = '0'; demo5Later(() => { bar.style.width = '97.4%'; }, 400); }
+    demo5Later(() => {
+      const el = document.getElementById('ds5-3-reveal');
+      if (el) el.classList.add('in');
+    }, 1400);
+  },
+  3: () => { // Governance — reveal tags
+    demo5Later(() => {
+      const el = document.getElementById('ds5-4-reveal');
+      if (el) el.classList.add('in');
+    }, 700);
+  }
+};
+
+function demo5ResetScreen(idx) {
+  const el = document.getElementById('ds5-' + (idx + 1));
+  if (!el) return;
+  ['ds5-2-reveal','ds5-3-reveal','ds5-4-reveal'].forEach(id => {
+    const r = document.getElementById(id); if (r) r.classList.remove('in');
+  });
+  const bar = document.getElementById('ds5-3-bar');
+  if (bar) bar.style.width = '0';
+}
+
+function demo5Show(n) {
+  demo5ClearTimers();
+  const ctx = DEMO5_CONTEXT[n];
+  const ctxPanel = document.getElementById('demo5-pill').parentElement;
+  ctxPanel.style.transition = 'opacity .2s ease';
+  ctxPanel.style.opacity = '0';
+  setTimeout(() => {
+    document.getElementById('demo5-pill').textContent = ctx.pill;
+    document.getElementById('demo5-title').innerHTML = ctx.title;
+    document.getElementById('demo5-body').textContent = ctx.body;
+    const hint = document.getElementById('demo5-hint');
+    const parts = ctx.hint.split(' ');
+    hint.querySelector('span:first-child').textContent = parts[0];
+    hint.querySelector('span:last-child').textContent = parts.slice(1).join(' ');
+    ctxPanel.style.opacity = '1';
+  }, 200);
+
+  demo5Dots.forEach((d, i) => d.classList.toggle('active', i === n));
+  document.getElementById('bf-url').textContent = BF_URLS[n];
+
+  const current = document.querySelector('.demo5-screen.ds5-active');
+  const target = document.getElementById('ds5-' + (n + 1));
+  if (current && current !== target) {
+    current.classList.add('ds5-exiting');
+    current.classList.remove('ds5-active');
+    setTimeout(() => { current.classList.remove('ds5-exiting'); current.style.transform = 'translateX(100%)'; }, 420);
+  }
+  if (target) {
+    target.style.transform = '';
+    requestAnimationFrame(() => requestAnimationFrame(() => target.classList.add('ds5-active')));
+  }
+  if (demo5Hooks[n]) demo5Hooks[n]();
+}
+
+document.getElementById('bf-main').addEventListener('click', function (e) {
+  if (e.target.closest('.replay-btn')) return;
+  if (demo5State < DEMO5_CONTEXT.length - 1) {
+    demo5State++;
+    demo5Show(demo5State);
+  } else {
+    document.getElementById('demo5-replay').classList.add('show');
+  }
+});
+
+function resetDemo5() {
+  demo5State = 0;
+  document.getElementById('demo5-replay').classList.remove('show');
+  demo5ResetScreen(0);
+  demo5ResetScreen(1);
+  demo5ResetScreen(2);
+  demo5ResetScreen(3);
+  demo5Show(0);
+}
+
+demo5Show(0);
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 6 — BEFORE / AFTER
+═══════════════════════════════════════════════════════════════ */
+function setBA(state) {
+  document.querySelectorAll('.toggle-wrap button').forEach(b => b.classList.toggle('on', b.dataset.state === state));
+  document.getElementById('ba-before').classList.toggle('hidden', state === 'after');
+  document.getElementById('ba-after').classList.toggle('hidden', state !== 'after');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 7 — ARCHITECTURE ACCORDION
+═══════════════════════════════════════════════════════════════ */
+function toggleLayer(head) {
+  const layer = head.closest('.layer');
+  const opening = !layer.classList.contains('open');
+  document.querySelectorAll('.arch-stack .layer').forEach(l => {
+    const on = l === layer && opening;
+    l.classList.toggle('open', on);
+    l.querySelector('.layer-head').setAttribute('aria-expanded', String(on));
+  });
+}
+document.querySelectorAll('.layer-head').forEach(hd => hd.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleLayer(hd); }
+}));
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 9 — BUSINESS VALUE CALCULATOR
+═══════════════════════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const usd = n => '$' + Math.round(n).toLocaleString('en-US');
+const usdShort = n => n >= 1e6 ? '$' + (n / 1e6).toFixed(2) + 'M' : (n >= 1e3 ? '$' + Math.round(n / 1e3) + 'K' : '$' + Math.round(n));
+const INVEST = 200000;
+const BVC_LABELS = ['Contract Growth & Capture', 'Workforce Readiness', 'Program Visibility', 'Data Foundation'];
+let BVC_STATE = { values: [0, 0, 0, 0], total: 0, payback: '—', inputs: {} };
+
+function setBvcTab(i, btn) {
+  document.querySelectorAll('.bvc-tabs button').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.bvc-panel').forEach((p, j) => p.classList.toggle('on', j === i));
+}
+
+function calcBvc() {
+  const bids = +$('i-bids').value, bidHrs = +$('i-bid-hrs').value, bidRate = +$('i-bid-rate').value;
+  const winLift = +$('i-win-lift').value, acv = +$('i-acv').value * 1e6;
+  const hires = +$('i-hires').value, ttf = +$('i-ttf').value, daily = +$('i-daily').value;
+  const billEmp = +$('i-bill-emp').value, util = +$('i-util').value;
+  const progs = +$('i-progs').value, pms = +$('i-pms').value, rptHrs = +$('i-rpt-hrs').value;
+  const rptRed = +$('i-rpt-red').value / 100, pmRate = +$('i-pm-rate').value;
+  const srcs = +$('i-srcs').value, recon = +$('i-recon').value, deRate = +$('i-de-rate').value;
+  const reconRed = +$('i-recon-red').value / 100, recs = +$('i-recs').value;
+
+  $('o-bids').textContent = bids;
+  $('o-bid-hrs').textContent = bidHrs;
+  $('o-bid-rate').textContent = usd(bidRate);
+  $('o-win-lift').textContent = winLift + 'pp';
+  $('o-acv').textContent = '$' + acv.toLocaleString('en-US');
+  $('o-hires').textContent = hires;
+  $('o-ttf').textContent = ttf + ' days';
+  $('o-daily').textContent = usd(daily);
+  $('o-bill-emp').textContent = billEmp;
+  $('o-util').textContent = util + 'pp';
+  $('o-progs').textContent = progs;
+  $('o-pms').textContent = pms;
+  $('o-rpt-hrs').textContent = rptHrs + ' hrs';
+  $('o-rpt-red').textContent = Math.round(rptRed * 100) + '%';
+  $('o-pm-rate').textContent = usd(pmRate);
+  $('o-srcs').textContent = srcs;
+  $('o-recon').textContent = recon + ' hrs';
+  $('o-de-rate').textContent = usd(deRate);
+  $('o-recon-red').textContent = Math.round(reconRed * 100) + '%';
+  $('o-recs').textContent = recs.toLocaleString('en-US');
+
+  const v0a = bids * bidHrs * bidRate;
+  const v0b = bids * (winLift / 100) * acv;
+  const v0 = v0a + v0b;
+  const v1a = hires * ttf * daily;
+  const v1b = billEmp * (util / 100) * 350 * 250;
+  const v1 = v1a + v1b;
+  const v2 = pms * rptHrs * 52 * rptRed * pmRate;
+  const v3a = recon * 52 * reconRed * deRate;
+  const v3b = recs * 0.12 * 50;
+  const v3 = v3a + v3b;
+  const vals = [v0, v1, v2, v3];
+  const total = vals.reduce((a, b) => a + b, 0);
+
+  $('v-0a').textContent = usd(v0a);
+  $('v-0b').textContent = usd(v0b);
+  $('f-0a').textContent = bids + ' bids × ' + bidHrs + ' hrs × $' + bidRate;
+  $('f-0b').textContent = bids + ' bids × ' + winLift + '% lift × $' + (acv/1e6).toFixed(1) + 'M ACV';
+  $('v-1a').textContent = usd(v1a);
+  $('v-1b').textContent = usd(v1b);
+  $('f-1a').textContent = hires + ' hires × ' + ttf + ' days × $' + daily;
+  $('f-1b').textContent = billEmp + ' emp × ' + util + '% util × $350/day × 250 days';
+  $('v-2').textContent = usd(v2);
+  $('f-2').textContent = pms + ' PMs × ' + rptHrs + ' hrs × 52 wks × ' + Math.round(rptRed*100) + '% × $' + pmRate;
+  $('v-3a').textContent = usd(v3a);
+  $('v-3b').textContent = usd(v3b);
+  $('f-3a').textContent = recon + ' hrs × 52 × ' + Math.round(reconRed*100) + '% × $' + deRate;
+  $('f-3b').textContent = recs.toLocaleString('en-US') + ' recs × 12% × $50';
+
+  vals.forEach((v, i) => { $('tt-' + i).textContent = usdShort(v); });
+  $('bvc-total').textContent = usd(total);
+  const monthly = total / 12;
+  const payback = monthly > 0 ? (INVEST / monthly).toFixed(1) + ' months' : '—';
+  $('bvc-payback').textContent = payback;
+  $('bvc-pills').innerHTML = vals.map((v, i) => '<span>' + BVC_LABELS[i] + ' · <b style="color:#fff;">' + usdShort(v) + '</b></span>').join('');
+
+  BVC_STATE = { values: vals, total, payback, inputs: { bids, bidHrs, bidRate, winLift, acv, hires, ttf, daily, billEmp, util, progs, pms, rptHrs, rptRed, pmRate, srcs, recon, deRate, reconRed, recs, v0a, v0b, v1a, v1b, v3a, v3b } };
+}
+
+function generateBvcPDF() {
+  const s = BVC_STATE;
+  const rows = [
+    ['Contract Growth & Capture', s.values[0],
+     s.inputs.bids + ' bids × ' + s.inputs.bidHrs + ' hrs saved × $' + s.inputs.bidRate + '/hr  +  ' + s.inputs.bids + ' bids × ' + s.inputs.winLift + '% win-rate lift × $' + (s.inputs.acv/1e6).toFixed(1) + 'M ACV',
+     'All inputs: industry benchmark'],
+    ['Workforce Readiness', s.values[1],
+     s.inputs.hires + ' hires × ' + s.inputs.ttf + ' days reduced × $' + s.inputs.daily + '/day  +  ' + s.inputs.billEmp + ' employees × ' + s.inputs.util + '% utilization lift',
+     'All inputs: industry benchmark'],
+    ['Program Visibility', s.values[2],
+     s.inputs.pms + ' PMs × ' + s.inputs.rptHrs + ' hrs/wk × 52 × ' + Math.round(s.inputs.rptRed * 100) + '% reduction × $' + s.inputs.pmRate + '/hr',
+     'All inputs: industry benchmark'],
+    ['Data Foundation', s.values[3],
+     'Reconciliation: ' + s.inputs.recon + ' hrs/wk × 52 × ' + Math.round(s.inputs.reconRed * 100) + '% × $' + s.inputs.deRate + '/hr  +  ' + s.inputs.recs.toLocaleString('en-US') + ' records × 12% dupe rate × $50',
+     'All inputs: industry benchmark']
+  ];
+  const max = Math.max(...s.values, 1);
+  const colors = ['#1E88C7', '#16A34A', '#7C3AED', '#F6AE31'];
+
+  const w = window.open('', '_blank', 'width=900,height=1100');
+  if (!w) { alert('Please allow pop-ups to export the business case.'); return; }
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>i3 × Salesforce — MDM Business Case</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',system-ui,sans-serif;color:#0F172A;background:#fff;padding:44px 52px;}
+  .hdr{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:18px;border-bottom:3px solid #F6AE31;margin-bottom:26px;}
+  .hdr h1{font-size:22px;font-weight:900;letter-spacing:-.02em;}
+  .hdr p{font-size:11px;color:#64748B;margin-top:5px;}
+  .hdr .brand{text-align:right;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#F6AE31;}
+  h2{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin:26px 0 12px;}
+  .inv{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;}
+  .inv div{border:1px solid #E2E8F0;border-radius:9px;padding:13px 14px;}
+  .inv div.hero{border-color:#F6AE31;background:#FFFBEB;}
+  .inv b{display:block;font-size:19px;font-weight:900;letter-spacing:-.02em;}
+  .inv .hero b{color:#92600A;}
+  .inv span{display:block;font-size:8.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#94A3B8;margin-top:4px;line-height:1.4;}
+  .hero-total{background:linear-gradient(135deg,#1D222A,#0A1525);border-radius:13px;padding:24px 28px;display:flex;align-items:center;gap:34px;color:#fff;margin-top:6px;}
+  .hero-total .c .l{font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+  .hero-total .c .v{font-size:27px;font-weight:900;letter-spacing:-.03em;margin-top:4px;}
+  .hero-total .c .v.g{color:#72BF44;}
+  .hero-total .c .v.o{color:#F6AE31;}
+  .hero-total .sep{width:1px;height:42px;background:rgba(255,255,255,.2);}
+  table{width:100%;border-collapse:collapse;margin-top:6px;}
+  th{text-align:left;font-size:8.5px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;color:#94A3B8;padding:0 10px 8px 0;border-bottom:1px solid #E2E8F0;}
+  td{padding:13px 10px 13px 0;border-bottom:1px solid #F1F5F9;font-size:10.5px;color:#475569;line-height:1.6;vertical-align:top;}
+  td.n{font-size:14px;font-weight:900;color:#0F172A;white-space:nowrap;}
+  td.cat{font-weight:800;color:#0F172A;font-size:11.5px;}
+  .bar{height:7px;border-radius:4px;margin-top:6px;}
+  .road{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+  .road div{border:1px solid #E2E8F0;border-radius:9px;padding:13px 15px;}
+  .road b{display:block;font-size:11.5px;font-weight:900;}
+  .road span{display:block;font-size:9.5px;color:#64748B;margin-top:4px;line-height:1.5;}
+  .road i{display:block;font-size:8.5px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#1E88C7;font-style:normal;margin-bottom:5px;}
+  footer{margin-top:30px;padding-top:15px;border-top:1px solid #E2E8F0;font-size:9px;color:#94A3B8;line-height:1.65;}
+  @media print{body{padding:24px 30px;} @page{size:letter;margin:14mm;}}
+</style></head><body>
+<div class="hdr">
+  <div><h1>Integration Innovation, Inc. (i3) — MDM Business Case</h1>
+  <p>Informatica MDM · Data Quality · Governance + Privacy &nbsp;|&nbsp; Generated ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</p></div>
+  <div class="brand">Salesforce<br><span style="color:#94A3B8;font-weight:700;letter-spacing:.06em;">Confidential</span></div>
+</div>
+<h2>Investment Snapshot</h2>
+<div class="inv">
+  <div class="hero"><b>$200,000</b><span>MDM Expansion — Proposed</span></div>
+  <div><b>$150,000</b><span>Informatica MDM IDMC</span></div>
+  <div><b>$50,000</b><span>Data Integration + Governance IPUs</span></div>
+  <div><b>$66,758</b><span>IDMC Already Closed Won (Jan 2026)</span></div>
+</div>
+<h2>Total Identified Value vs. Investment</h2>
+<div class="hero-total">
+  <div class="c"><div class="l">Total Identified Annual Value</div><div class="v g">${usd(s.total)}</div></div>
+  <div class="sep"></div>
+  <div class="c"><div class="l">Proposed Investment</div><div class="v">$200,000</div></div>
+  <div class="sep"></div>
+  <div class="c"><div class="l">Payback Period</div><div class="v o">${s.payback}</div></div>
+</div>
+<h2>Value Breakdown by Category</h2>
+<table>
+  <tr><th style="width:26%;">Category</th><th style="width:16%;">Annual Value</th><th>Model &amp; Inputs</th></tr>
+  ${rows.map((r,i)=>`<tr>
+    <td class="cat">${r[0]}<div class="bar" style="width:${Math.max(8,(r[1]/max)*100)}%;background:${colors[i]};"></div></td>
+    <td class="n">${usd(r[1])}</td>
+    <td>${r[2]}<div style="font-size:9px;color:#94A3B8;margin-top:5px;">${r[3]}</div></td>
+  </tr>`).join('')}
+</table>
+<h2>Proposed Implementation Roadmap</h2>
+<div class="road">
+  <div><i>Nov – Dec 2026</i><b>Discovery &amp; MDM Design</b><span>Entity modeling session with Betsy Ray and Ron Givens. Survivorship rules defined. Infosec and compliance requirements confirmed.</span></div>
+  <div><i>Dec 2026 – Jan 2027</i><b>Configuration &amp; Quality Rules</b><span>MDM match-and-merge configuration. Data Quality rules for clearance expiry, skills completeness, and duplicate detection. Governance + Privacy field policies applied.</span></div>
+  <div><i>Jan – Feb 12, 2027</i><b>UAT, Infosec Review &amp; Go-Live</b><span>User acceptance testing with Betsy, Ron, and Zak. IT and Infosec vendor vetting. Production cutover to the golden record store.</span></div>
+</div>
+<footer>
+<b style="color:#475569;">Assumption sourcing.</b> All Business Value Calculator inputs are industry benchmarks. They are intended as a starting point for discussion and will be replaced with i3 actuals during the MDM design session. The value model covers four categories: Contract Growth &amp; Capture (proposal efficiency + win-rate lift), Workforce Readiness (time-to-fill reduction + utilization improvement), Program Visibility (PM reporting hours recaptured), and Data Foundation (reconciliation savings + duplicate record cost avoidance).<br><br>
+The $200,000 figure covers Informatica MDM, Data Integration IPU, and Governance + Privacy IPU licensing. Implementation services are priced separately through the implementation partner (to be confirmed). Deltek remains i3's ERP and system of record — Informatica IDMC reads from it; MDM sits on top of the data it produces. Nothing in Phase 1 replaces or reconfigures the existing IDMC pipelines Ron Givens built.<br><br>
+Values are directional estimates for executive discussion, not a contractual commitment or a guarantee of results. Close target: February 12, 2027. Stage: 02 Best Case.
+</footer>
+<script>window.onload=function(){setTimeout(function(){window.print();},650);}<\/script>
+</body></html>`);
+  w.document.close();
+}
+
+calcBvc();
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 10 — GANTT DETAIL
+═══════════════════════════════════════════════════════════════ */
+const GANTT_DETAIL = [
+  ['Discovery &amp; Entity Modeling', 'Nov 2026 · 2–3 weeks', 'A structured half-day session with Betsy Ray, Ron Givens, and Zak Elms to define i3\'s entity types (contract, customer, employee, program), map the fields each source system owns, and agree on survivorship rules. This session is where every BVC benchmark above gets replaced with an i3 actual. Output: an approved entity model that drives the MDM configuration.'],
+  ['MDM Configuration', 'Dec 2026 – Jan 2027 · 4–6 weeks', 'Informatica MDM is configured for the entity types agreed in the design session. Match engine thresholds, merge rules, and survivorship configuration are built and tested against a sample of i3\'s real data. Ron and Zak participate in validation — this is the phase where the team\'s self-implementation knowledge becomes a significant accelerator.'],
+  ['Data Quality Rules', 'Dec 2026 – Jan 2027 · 3–4 weeks', 'Quality rules are configured and validated: clearance expiry alerts, skills-profile completeness scoring, duplicate detection thresholds, and contract-field completeness rules. Each rule is mapped to the team that acts on it (HR for clearance alerts, BD for skills gaps, PMs for contract gaps) — so alerts reach the right person automatically.'],
+  ['Governance &amp; Privacy', 'Jan 2027 · 2–3 weeks', 'Field-level privacy tags are applied to sensitive fields (clearance level, SSNs, compensation). Data lineage configuration captures the full trail from source system to golden record. Access policies are aligned to i3\'s Infosec requirements. This phase produces the documentation package that satisfies vendor vetting.'],
+  ['UAT &amp; Infosec Review', 'Jan – Feb 2027 · 2 weeks', 'User acceptance testing with Betsy, Ron, and Zak. The IT and Infosec teams conduct vendor vetting using the lineage and governance documentation produced in Phase 4. Defects are resolved before cutover. This is the window where adoption risk is retired — not post-go-live.'],
+  ['Go-Live — Feb 12, 2027', 'Production cutover · Target', 'The golden record store goes live. All source systems continue running unchanged. MDM begins producing trusted records for contracts, customers, and employees on every IDMC pipeline cycle. Clearance expiry alerts begin firing. The data foundation is in place for Tableau, Data Cloud, and Agentforce as Phase 2.']
+];
+
+function setGantt(i, row) {
+  const d = document.getElementById('gantt-detail');
+  const already = row.classList.contains('on');
+  document.querySelectorAll('.grow').forEach(r => r.classList.remove('on'));
+  if (already) { d.classList.remove('open'); return; }
+  row.classList.add('on');
+  const g = GANTT_DETAIL[i];
+  d.innerHTML = '<div class="dt">' + g[1] + '</div><b>' + g[0] + '</b><p>' + g[2] + '</p>';
+  d.classList.add('open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>i3 × Salesforce — Executive Summary</title>
+<link rel="icon" type="image/png" href="https://i3-corps.com/images/site/i3-square.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:#0F172A;-webkit-font-smoothing:antialiased;}
+.page{max-width:860px;margin:0 auto;padding:52px 48px 60px;}
+/* Header */
+.hdr{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:18px;border-bottom:3px solid #F6AE31;margin-bottom:32px;}
+.hdr-left h1{font-size:26px;font-weight:900;letter-spacing:-.025em;color:#0F172A;}
+.hdr-left p{font-size:11px;color:#64748B;margin-top:5px;line-height:1.5;}
+.hdr-right{text-align:right;}
+.brand-badge{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin-bottom:4px;}
+.brand-badge svg{width:22px;height:16px;}
+.brand-badge img{width:24px;height:24px;border-radius:5px;}
+.brand-badge span{font-size:11px;font-weight:900;color:#64748B;}
+.conf{font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#94A3B8;}
+/* Sections */
+h2{font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#64748B;margin:28px 0 12px;padding-bottom:6px;border-bottom:1px solid #E2E8F0;}
+/* Focus area grid */
+.focus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px;}
+.focus{border-radius:11px;padding:16px;border-top:3px solid var(--fc,#1E88C7);}
+.focus .label{font-size:8.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--fc,#1E88C7);margin-bottom:7px;}
+.focus h3{font-size:14px;font-weight:900;color:#0F172A;margin-bottom:6px;line-height:1.2;}
+.focus p{font-size:.78rem;color:#475569;line-height:1.6;}
+/* Investment grid */
+.inv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.inv-cell{border:1px solid #E2E8F0;border-radius:9px;padding:13px;}
+.inv-cell.hero{border-color:#F6AE31;background:#FFFBEB;}
+.inv-cell .v{font-size:1.35rem;font-weight:900;color:#0F172A;letter-spacing:-.02em;}
+.inv-cell.hero .v{color:#92600A;}
+.inv-cell .l{font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#94A3B8;margin-top:4px;line-height:1.4;}
+/* Pain + solution */
+.pain-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.pain-box{background:#FEF2F2;border:1px solid rgba(200,16,46,.15);border-radius:9px;padding:12px 14px;}
+.pain-box .lbl{font-size:8px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#C8102E;margin-bottom:4px;}
+.pain-box p{font-size:.8rem;color:#7F1D1D;line-height:1.55;}
+.sol-box{background:#F0FDF4;border:1px solid rgba(22,163,74,.2);border-radius:9px;padding:12px 14px;}
+.sol-box .lbl{font-size:8px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#16A34A;margin-bottom:4px;}
+.sol-box p{font-size:.8rem;color:#14532D;line-height:1.55;}
+/* Architecture strip */
+.arch-strip{display:flex;gap:0;margin-bottom:14px;}
+.arch-step{flex:1;text-align:center;padding:11px 8px;position:relative;}
+.arch-step:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-size:14px;color:#94A3B8;font-weight:900;}
+.arch-step .icon{font-size:20px;margin-bottom:4px;}
+.arch-step .name{font-size:9.5px;font-weight:800;color:#0F172A;margin-bottom:2px;}
+.arch-step .sub{font-size:8px;color:#94A3B8;}
+.arch-step.active{background:#FFFBEB;border-radius:10px;border:1.5px solid #F6AE31;}
+.arch-step.live{background:#F0FDF4;border-radius:10px;border:1.5px solid rgba(22,163,74,.35);}
+/* Timeline */
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.phase{border:1px solid #E2E8F0;border-radius:9px;padding:12px 14px;}
+.phase .date{font-size:8.5px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:#1E88C7;margin-bottom:5px;}
+.phase h4{font-size:12px;font-weight:900;color:#0F172A;margin-bottom:4px;}
+.phase p{font-size:.78rem;color:#475569;line-height:1.55;}
+/* Team strip */
+.team-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+.team-p{display:flex;align-items:center;gap:10px;}
+.team-p .av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;}
+.team-p b{display:block;font-size:11.5px;font-weight:800;color:#0F172A;}
+.team-p span{display:block;font-size:9px;color:#64748B;margin-top:1px;}
+/* CTA */
+.cta-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px;padding-top:18px;border-top:1px solid #E2E8F0;}
+.cta-bar a{display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:10px 18px;font-size:11px;font-weight:800;text-decoration:none;transition:all .2s;}
+.cta-bar a.primary{background:#F6AE31;color:#1D222A;}
+.cta-bar a.ghost{background:#F8FAFC;color:#475569;border:1px solid #E2E8F0;}
+.foot{text-align:center;margin-top:28px;padding-top:14px;border-top:1px solid #E2E8F0;font-size:9px;color:#94A3B8;line-height:1.65;}
+.chip{display:inline-block;font-size:8px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;border-radius:20px;padding:2px 8px;margin-left:5px;}
+.chip.live{background:#DCFCE7;color:#15803D;}
+.chip.prop{background:#FFFBEB;color:#92600A;}
+@media print{body{background:#fff;} @page{size:letter;margin:12mm;} .cta-bar{display:none;}}
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- Header -->
+  <div class="hdr">
+    <div class="hdr-left">
+      <h1>i3 × Salesforce — Executive Summary</h1>
+      <p>Integration Innovation, Inc. · Informatica MDM + Governance · October 2026 · Confidential</p>
+    </div>
+    <div class="hdr-right">
+      <div class="brand-badge">
+        <svg viewBox="0 0 273 191"><path fill="#00A1E0" d="M113.7 21.2C122.5 12 134.8 6.3 148.4 6.3c18.1 0 33.8 10.1 42.2 25.1 7.3-3.3 15.4-5.1 23.9-5.1 32.7 0 59.2 26.7 59.2 59.6s-26.5 59.6-59.2 59.6c-4 0-7.9-.4-11.7-1.2-7.4 13.2-21.5 22.1-37.7 22.1-6.8 0-13.2-1.6-18.9-4.3-7.5 17.6-24.9 29.9-45.2 29.9-21.2 0-39.2-13.4-46.1-32.2-3.1.7-6.3 1-9.6 1C20.6 160.8 0 139.9 0 114.2c0-17.2 9.3-32.2 23.1-40.3-2.8-6.5-4.4-13.7-4.4-21.3C18.7 23.6 42.4 0 71.6 0c17.1 0 32.4 8.1 42.1 20.8"/></svg>
+        <span>Salesforce</span>
+        <img src="https://i3-corps.com/images/site/i3-square.png" alt="i3"/>
+        <span>i3</span>
+      </div>
+      <div class="conf">Confidential — Not for Distribution</div>
+    </div>
+  </div>
+
+  <!-- Three focus areas -->
+  <h2>The Three Focus Areas</h2>
+  <div class="focus-grid">
+    <div class="focus" style="--fc:#1E88C7;background:#F0F9FF;">
+      <div class="label">01 — Contract Growth &amp; Capture</div>
+      <h3>Win More.<br>Bid Smarter.</h3>
+      <p>A single trusted record of every customer and contract enables BD teams to build bid responses from governed data — not phone calls to HR — and tracks win rates with evidence.</p>
+    </div>
+    <div class="focus" style="--fc:#16A34A;background:#F0FDF4;">
+      <div class="label">02 — Workforce Readiness</div>
+      <h3>Staff Faster.<br>Stay Compliant.</h3>
+      <p>Unified employee master records covering clearances, skills, and program assignments mean i3 can staff a new contract in days, not weeks — with clearance expiry flagged before it matters.</p>
+    </div>
+    <div class="focus" style="--fc:#7C3AED;background:#FAF5FF;">
+      <div class="label">03 — Program Visibility</div>
+      <h3>Report Once.<br>Trust the Number.</h3>
+      <p>Program managers stop manually pulling together status from three systems. One governed data layer feeds every program, staffing, and performance view — automatically.</p>
+    </div>
+  </div>
+
+  <!-- Investment -->
+  <h2>Investment Snapshot</h2>
+  <div class="inv-grid">
+    <div class="inv-cell hero">
+      <div class="v">$200K</div>
+      <div class="l">MDM + Governance — Proposed<span class="chip prop">Stage 02</span></div>
+    </div>
+    <div class="inv-cell">
+      <div class="v">$150K</div>
+      <div class="l">Informatica MDM IDMC</div>
+    </div>
+    <div class="inv-cell">
+      <div class="v">$50K</div>
+      <div class="l">Data Integration + Governance IPUs</div>
+    </div>
+    <div class="inv-cell">
+      <div class="v">$66.8K</div>
+      <div class="l">IDMC Already Owned<span class="chip live">Jan 2026</span></div>
+    </div>
+  </div>
+  <div style="margin-top:10px;background:#F8FAFC;border-left:3px solid #F6AE31;border-radius:0 9px 9px 0;padding:12px 15px;font-size:.82rem;color:#475569;line-height:1.65;">
+    <b style="color:#0F172A;">Close target: February 12, 2027.</b> Implementation partner: to be confirmed. i3 self-implemented Informatica IDMC in January 2026 — the same engineering capability that makes the MDM configuration faster to stand up. Deltek remains i3's ERP and system of record; nothing in Phase 1 replaces it.
+  </div>
+
+  <!-- Pain + Solution -->
+  <h2>The Problem &amp; The Solution</h2>
+  <div class="pain-row">
+    <div class="pain-box">
+      <div class="lbl">Today — Siloed Data</div>
+      <p>The same customer, contract, or employee appears differently across Deltek, the ATS, and SharePoint. Every cross-department handoff starts with reconciliation. Clearance data isn't tracked in any single place. Program status requires manual exports from three systems.</p>
+    </div>
+    <div class="sol-box">
+      <div class="lbl">After MDM + Governance</div>
+      <p>Informatica MDM matches and merges records into one trusted golden record per entity. Survivorship rules decide which field wins — automatically. Data Quality flags clearance expiry 90 days out. Governance applies role-based privacy controls and produces the lineage documentation Infosec requires.</p>
+    </div>
+  </div>
+
+  <!-- Architecture -->
+  <h2>Technical Architecture — Five Layers</h2>
+  <div class="arch-strip">
+    <div class="arch-step">
+      <div class="icon">🗄️</div>
+      <div class="name">Source Systems</div>
+      <div class="sub">Deltek · ATS · SharePoint</div>
+    </div>
+    <div class="arch-step live">
+      <div class="icon">🔄</div>
+      <div class="name">IDMC Integration</div>
+      <div class="sub">Live — owned Jan 2026</div>
+    </div>
+    <div class="arch-step active">
+      <div class="icon">🏆</div>
+      <div class="name">MDM + Quality</div>
+      <div class="sub">Proposed Phase 1</div>
+    </div>
+    <div class="arch-step active">
+      <div class="icon">🔒</div>
+      <div class="name">Governance</div>
+      <div class="sub">Privacy + lineage</div>
+    </div>
+    <div class="arch-step" style="opacity:.6;">
+      <div class="icon">📊</div>
+      <div class="name">Activation</div>
+      <div class="sub">Tableau · Data Cloud · Agentforce</div>
+    </div>
+  </div>
+  <div style="font-size:8.5px;color:#94A3B8;text-align:center;">Legend: <span style="background:#F0FDF4;border:1px solid rgba(22,163,74,.35);border-radius:4px;padding:1px 6px;color:#15803D;font-weight:800;">Green = Live today</span> &nbsp; <span style="background:#FFFBEB;border:1px solid #F6AE31;border-radius:4px;padding:1px 6px;color:#92600A;font-weight:800;">Amber = Proposed Phase 1</span> &nbsp; Grey = Roadmap</div>
+
+  <!-- Timeline -->
+  <h2>Proposed Implementation Timeline</h2>
+  <div class="timeline">
+    <div class="phase">
+      <div class="date">Nov – Dec 2026</div>
+      <h4>Discovery &amp; Design</h4>
+      <p>On-site MDM design session with Betsy Ray and Ron Givens. Entity types, survivorship rules, and Infosec requirements confirmed. All BVC benchmarks replaced with i3 actuals.</p>
+    </div>
+    <div class="phase">
+      <div class="date">Dec 2026 – Jan 2027</div>
+      <h4>Configuration &amp; Quality</h4>
+      <p>MDM match-and-merge, Data Quality rules (clearance expiry, skills completeness), Governance + Privacy field policies. Validated against i3's real data with Ron and Zak.</p>
+    </div>
+    <div class="phase">
+      <div class="date">Jan – Feb 12, 2027</div>
+      <h4>UAT, Infosec &amp; Go-Live</h4>
+      <p>User acceptance testing. IT and Infosec vendor vetting using governance lineage documentation. Production cutover. Golden record store live. Phase 2 (Tableau, Data Cloud) begins planning.</p>
+    </div>
+  </div>
+
+  <!-- Account team -->
+  <h2>Account Team</h2>
+  <div class="team-strip">
+    <div class="team-p">
+      <div class="av" style="background:#1E88C7;">JJ</div>
+      <div><b>JJ Jackson</b><span>Account Executive</span></div>
+    </div>
+    <div class="team-p">
+      <div class="av" style="background:#F6AE31;color:#1D222A;">ED</div>
+      <div><b>Eric Dalton</b><span>Solutions Engineer</span></div>
+    </div>
+    <div class="team-p">
+      <div class="av" style="background:#7C3AED;">GS</div>
+      <div><b>Grant Stephens</b><span>Regional VP</span></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-bar">
+    <a href="mailto:jj.jackson@salesforce.com?subject=i3 MDM Design Session" class="primary">Schedule the Design Session →</a>
+    <a href="index.html" class="ghost">Full Interactive Microsite</a>
+    <a href="bva.html" class="ghost">Business Value Assessment</a>
+    <a href="team.html" class="ghost">Account Team</a>
+  </div>
+
+  <div class="foot">
+    Prepared by the Salesforce account team for Integration Innovation, Inc. (i3) · October 2026 · Confidential — Not for distribution.<br>
+    All Business Value Calculator figures are industry benchmarks and will be updated with i3 actuals during the design session. Values are directional estimates for executive discussion only.
+  </div>
+</div>
+</body>
+</html>
